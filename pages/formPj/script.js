@@ -14,10 +14,11 @@ const CreateField = {
         const div = document.getElementById("items");
     
         const child_div = document.createElement("div");
-        child_div.setAttribute("class", "form-row");
+        child_div.setAttribute("class", "pure-u-1 pure-u-md-1-3 mg-t-b-10");
     
         const input = document.createElement("input");
         input.setAttribute("type", document.querySelector('#inputs').value);
+        input.setAttribute("class", "pure-input-1");
         input.setAttribute("value", textLabel);
         
         child_div.appendChild(labelElement);
