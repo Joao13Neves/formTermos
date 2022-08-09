@@ -53,7 +53,7 @@ const Form = {
     },
     
 
-    generateDocument(documentArray, contractType) {
+    generateDocument(contractType, RequerimentType, documentArray, ) {
 
         var doc = new jsPDF()
         
@@ -76,21 +76,28 @@ const Form = {
 
     submit() {
       
+        // pegando todo o nodelist de inputs e atribuindo a variáveis
         const elementsFormDocument = document.querySelectorAll('#form-document input');
         const elementsFormAdress = document.querySelectorAll('#form-address input');
         const elementsFormItems = document.querySelectorAll('#form-items input');
         
         try {
 
+            // validando se os valores estão vazios
             elementsFormDocument.forEach(element => {
                 Form.validateEmpty(element.value, element.placeholder)
             });
 
-            
+            //criando um array vazio e atribuindo os valores do nodelist no array
             const documentArray = [];
             elementsFormDocument.forEach(item => documentArray.push(item.value))
-
-            Form.generateDocument(document.querySelector('input[id="tipo-contrato"]:checked').value)
+            
+            //identificando o tipo de contrato e requerimento
+            const tipoContrato = document.querySelector('input[id="tipo-contrato"]:checked').value
+            const tipoRequerimento = document.querySelector('input[id="tipo-requerimento"]:checked').value
+            
+            //chamando função para gerar documento
+            Form.generateDocument(tipoContrato, tipoRequerimento, documentArray)
            
         } catch(error) {
             swal("Atenção!", error.message)
