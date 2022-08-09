@@ -53,13 +53,32 @@ const Form = {
     },
     
 
+    generateDocument(documentArray, contractType) {
+
+        var doc = new jsPDF()
+        
+        if(contractType == "CLT") {
+            doc.text(10, 10, `Nome: ${documentArray[0]}`);    
+            doc.text(10, 20, `CPF: ${documentArray[1]}`);
+        }
+
+        if(contractType == "ESTAG") {
+            doc.text(10, 10, `Nome: ${documentArray[0]}`);    
+            doc.text(10, 20, `CPF: ${documentArray[1]}`);
+        }
+
+        if(contractType == "PJ") {
+            doc.text(10, 10, `Nome Empresa: ${documentArray[0]}`);    
+            doc.text(10, 20, `CNPJ: ${documentArray[1]}`);
+        }
+        doc.save('Requerimento.pdf')
+    },
+
     submit() {
       
         const elementsFormDocument = document.querySelectorAll('#form-document input');
         const elementsFormAdress = document.querySelectorAll('#form-address input');
         const elementsFormItems = document.querySelectorAll('#form-items input');
-        
-
         
         try {
 
@@ -67,23 +86,12 @@ const Form = {
                 Form.validateEmpty(element.value, element.placeholder)
             });
 
-            elementsFormAdress.forEach(element => {
-                Form.validateEmpty(element.value, element.placeholder)
-            });
-
-            elementsFormItems.forEach(element => {
-                Form.validateEmpty(element.value, element.placeholder)
-            });
             
             const documentArray = [];
-            const addressArray = [];
-            const itemsArray = [];
-
             elementsFormDocument.forEach(item => documentArray.push(item.value))
-            elementsFormAdress.forEach(item => addressArray.push(item.value))
-            elementsFormItems.forEach(item => itemsArray.push(item.value))
-            
-            
+
+            Form.generateDocument(document.querySelector('input[id="tipo-contrato"]:checked').value)
+           
         } catch(error) {
             swal("Atenção!", error.message)
             return false;
