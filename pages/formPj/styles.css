@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* removendo o efeito do input quando clica*/
+textarea:focus, input:focus{
+    outline: none;
+}
+
+form {
+    background-color: #fefefe;
+    max-width: 1000px;
+    margin: 20px auto;
+}
+
+
+/* title */
+form > h1 {
+    text-align: center;
+    margin: 2rem 0;
+    color: #00008B;
+}
+/*contract type */
+.contract-type {
+    background-color: whitesmoke;
+    padding: 1rem 5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 10px 10px 5px 1px #eee;
+}
+
+/* container start*/
+.person-wrapper {
+    background-color: whitesmoke;
+    list-style-type: none;
+    padding: 0;
+    border-radius: 3px;
+    padding: 1.75rem 1.75rem;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 5px 1px #eee;
+}
+.address-wrapper {
+    background-color: whitesmoke;
+    list-style-type: none;
+    padding: 0;
+    border-radius: 3px;
+    padding: 1.75rem 1.75rem;
+    margin-bottom: 20px;
+    box-shadow: 10px 10px 5px 1px #eee;
+}
+.items-wrapper {
+    background-color: whitesmoke;
+    list-style-type: none;
+    padding: 0;
+    border-radius: 3px;
+    padding: 1.75rem 1.75rem;
+    box-shadow: 10px 10px 5px 1px #eee;
+}
+/* container end*/
+
+.form-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color:  #0000CD;
+}
+
+/* form row */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    flex:1;  
+    justify-content: flex-end;
+    padding: .3em;
+}
+.form-row > label {
+    padding: .3em 1em .3em 0;
+    flex: 1;
+    font-weight: 500;
+    color:  rgb(44, 3, 109);
+    
+}
+.form-row > input {
+    border: 0.5px;
+    border-radius: 5px;
+    flex: 1;
+    padding: 0.75rem;
+    margin: 1px 0;
+}
+
+.form-row > input:focus {
+    border: 1px solid rgba(81, 203, 238, 5);
+    border-radius: 5px;
+    flex: 1;
+    padding: 0.75rem;
+    margin: 1px 0;
+}
+
+.add-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.options {
+    border: 0.5px;
+    border-radius: 5px;
+    flex: 1;
+    padding: 0.75rem;
+    margin: 1px 0;
+}
+
+.btnrow {
+    display: flex;
+    align-items: flex-end;
+}
+.btn-process {
+    background-color: #008CBA; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+/* form row end */

@@ -5,80 +5,117 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário Pessoa Jurídica</title>
-    
-    <link rel="stylesheet" herf="styles.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <main>
-        <form>
-            <h1>Termo responsabilidade Pessoa Jurídica</h1>
+    
+    <form onsubmit="Form.submit(event)">
+        <h1 id="title">Termo responsabilidade Pessoa Jurídica</h1>
+        <div class="contract-type">
             <div>
-                <label>Nome Empresa</label>
-                <input placeholder="Insira nome da empresa" type="text">
+                <label>CLT</label>
+                <input onclick="changeTitles('CLT')" type="radio" id="profile-input-clt" name="option" value="CLT">
             </div>
             <div>
-                <label>CNPJ</label>
-                <input placeholder="Insira cnpj" type="text" minlength="1" maxlength="14">
+                <label>PJ</label>
+                <input onclick="changeTitles('PJ')" type="radio" id="profile-input-pj" name="option" value="PJ">
             </div>
             <div>
-                <h2>Endereço Empresa</h2>
+                <label>Estagiário</label>
+                <input onclick="changeTitles('ESTAG')" type="radio" id="profile-input-estag" name="option" value="ESTAG">
             </div>
+        </div>        
+        <div class="person-wrapper">   
             <div>
+                <h2 class="form-title" id="form-title">Dados Pessoais</h2>
+            </div>
+            <div class="form-row">
+                <label id="profile-name">Nome Empresa</label>
+                <input placeholder="Insira nome da empresa" type="text" id="name">
+            </div>
+            <div class="form-row">
+                <label id="profile-document">CNPJ</label>
+                <input placeholder="Insira cnpj" type="text" minlength="1" maxlength="14" id="cnpj">
+            </div>
+        </div>
+
+        <div class="address-wrapper">  
+            <div>
+                <h2 class="form-title">Endereço</h2>
+            </div>
+            <div class="form-row">
                 <label>Rua</label>
-                <input placeholder="Nome da rua/av/tr" type="text">
+                <input placeholder="Nome da rua/av/tr" type="text" id="rua">
             </div>
-            <div>
+            <div class="form-row">
                 <label>N°</label>
-                <input placeholder="Insira n°" type="number">
+                <input placeholder="Insira n°" type="number" id="numero">
             </div>
-            <div>
+            <div class="form-row">
                 <label>Complemento</label>
-                <input placeholder="Insira complemento" type="text">
+                <input placeholder="Insira complemento" type="text" id="complemento">
             </div>
-            <div>
+            <div class="form-row">
                 <label>Bairro</label>
-                <input placeholder="Insira bairro" type="text">
+                <input placeholder="Insira bairro" type="text" id="bairro">
             </div>
-            <div>
+            <div class="form-row">
                 <label>Cidade</label>
-                <input placeholder="Insira cidade" type="text">
+                <input placeholder="Insira cidade" type="text" id="cidade">
             </div>
-            <div>
+            <div class="form-row">
                 <label>UF</label>
-                <input placeholder="Insira UF" type="text" minlength="2" maxlength="2">
+                <input placeholder="Insira UF" type="text" minlength="2" maxlength="2" id="uf">
+            </div>
+        </div>
+        
+        
+        <div class="contract-type">
+            <div>
+                <label>Aquisição</label>
+                <input type="radio" id="radio" name="option" value="QA">
             </div>
             <div>
-                <h2>Itens</h2>
+                <label>Devolução</label>
+                <input type="radio" id="radio" name="option" value="DE">
             </div>
             <div>
+                <label>Troca de Equipamento</label>
+                <input type="radio" id="radio" name="option" value="TE">
+            </div>
+        </div>
+
+        <div class="items-wrapper" id="items">  
+            <div>
+                <h2 class="form-title">Itens</h2>
+                
+                <button onclick="addField('item')">Add</button>
+
+                <div class="add-row">
+                    <input placeholder="Digite o texto da label" class="" type="text" id="inputName">
+                    
+                    <select name="input" id="inputs">
+                        <option value="text" class="options">Selecione o tipo de input</option>
+                        <option value="text" class="options">Type text</option>
+                        <option value="number">Type number</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
                 <label>Notebook</label>
-                <input placeholder="Digite o modelo" type="text">
+                <input placeholder="Digite o modelo" type="text" id="nootbook">
             </div>
-            <div>
-                <label>Patrimônio</label>
-                <input placeholder="N° patrimônio" type="text" minlength="1" maxlength="6">
-            </div>
-            <div>
-                <label>Fonte</label>
-                <input placeholder="Digite o modelo" type="text">
-            </div>
-            <div>
-                <label>Patrimônio</label>
-                <input placeholder="N° patrimônio" type="text" minlength="1" maxlength="6">
-            </div>
-            <div>
-                <label>Demais itens</label>
-                <input placeholder="Digite o modelo" type="text">
-            </div>
-            <div>
-                <label>Patrimônio</label>
-                <input placeholder="N° patrimônio" type="text" minlength="1" maxlength="6">
-            </div>
-            <div>
-                <label>Data</label>
-                <input placeholder="dd/mm/aaaa" type="text" minlength="1" maxlength="10">
-            </div>
-        </form>
-    </main>
+        </div>
+        <br>
+        <div class="btnrow">
+            <button class="btnProcess" id="btnProcess" class="btn-process">Processar</button>
+        </div>
+    </form>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
