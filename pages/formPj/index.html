@@ -13,18 +13,18 @@
     
     <form onsubmit="Form.submit(event)">
         <h1 id="title">Termo responsabilidade Pessoa Jurídica</h1>
-        <div class="contract-type">
+        <div class="contract-type" id="contract-type">
             <div>
-                <label>CLT</label>
-                <input onclick="changeTitles('CLT')" type="radio" id="profile-input-clt" name="option" value="CLT">
+                <label class="contract-type-clt">CLT</label>
+                <input onclick="ChangeContractElement.changeTitleContractDefault()" type="radio" id="profile-input-clt" name="option" value="CLT">
             </div>
             <div>
-                <label>PJ</label>
-                <input onclick="changeTitles('PJ')" type="radio" id="profile-input-pj" name="option" value="PJ">
+                <label class="contract-type-pj">PJ</label>
+                <input onclick="ChangeContractElement.changeTitleContractBusiness()" type="radio" id="profile-input-pj" name="option" value="PJ">
             </div>
             <div>
-                <label>Estagiário</label>
-                <input onclick="changeTitles('ESTAG')" type="radio" id="profile-input-estag" name="option" value="ESTAG">
+                <label class="contract-type-estag">Estagiário</label>
+                <input onclick="changeTitleContractDefault()" type="radio" id="profile-input-estag" name="option" value="ESTAG">
             </div>
         </div>        
         <div class="person-wrapper">   
@@ -32,11 +32,11 @@
                 <h2 class="form-title" id="form-title">Dados Pessoais</h2>
             </div>
             <div class="form-row">
-                <label id="profile-name">Nome Empresa</label>
+                <label class="contract-name">Nome Empresa</label>
                 <input placeholder="Insira nome da empresa" type="text" id="name">
             </div>
             <div class="form-row">
-                <label id="profile-document">CNPJ</label>
+                <label class="contract-document">CNPJ</label>
                 <input placeholder="Insira cnpj" type="text" minlength="1" maxlength="14" id="cnpj">
             </div>
         </div>
@@ -90,12 +90,15 @@
         <div class="items-wrapper" id="items">  
             <div>
                 <h2 class="form-title">Itens</h2>
-                
-                <button onclick="addField('item')">Add</button>
-
                 <div class="add-row">
-                    <input placeholder="Digite o texto da label" class="" type="text" id="inputName">
+                    <button onclick="CreateField.createInput()" class="addBtn">Add</button>
                     
+                    <select name="input" id="inputName">
+                        <option value="" class="options">Selecione o texto da label</option>
+                        <option value="Número" class="options">Número</option>
+                        <option value="Patrimônio">Patrimônio</option>
+                    </select>
+
                     <select name="input" id="inputs">
                         <option value="text" class="options">Selecione o tipo de input</option>
                         <option value="text" class="options">Type text</option>
@@ -110,8 +113,8 @@
             </div>
         </div>
         <br>
-        <div class="btnrow">
-            <button class="btnProcess" id="btnProcess" class="btn-process">Processar</button>
+        <div class="row-btn-process">
+            <button class="btn-process">Processar</button>
         </div>
     </form>
 

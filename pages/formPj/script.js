@@ -1,41 +1,43 @@
 
-function changeTitles(type) {    
-    console.log(type)
-    if(type="CLT" || type == "ESTAG") {
-        document.getElementById("profile-name").innerHTML = "CLT";
-        document.getElementById("profile-document").innerHTML = "CPF";
-    }
+const CreateField = {
+    createInput() {     
+        if(document.getElementById("inputName").value == null || document.getElementById("inputName").value == "") {
+            swal("Atenção!", "Favor, preencher o nome do campo a ser criado!");
+            return false;
+        }
 
-    if(type="PJ") {
-        document.getElementById("profile-name").innerHTML = "PJ";
-        document.getElementById("profile-document").innerHTML = "CNPJ";
-    }
+        const textLabel = document.getElementById("inputName").value;
+        const labelElement = document.createElement("label");
+        labelElement.innerHTML = textLabel;
 
-}
-
-function createInput(inputType) {
-    const textLabel = document.getElementById("inputName").value;
-    const labelElement = document.createElement("label");
-    labelElement.innerHTML = textLabel;
+        const div = document.getElementById("items");
     
-    const div = document.getElementById("items");
-
-    const child_div = document.createElement("div");
-    child_div.setAttribute("class", "form-row");
-
-    const input = document.createElement("input");
-    input.setAttribute("type", inputType);
-    child_div.appendChild(labelElement);
-    child_div.appendChild(input);
-
-    div.append(child_div);
-    div.appendChild(item);
+        const child_div = document.createElement("div");
+        child_div.setAttribute("class", "form-row");
+    
+        const input = document.createElement("input");
+        input.setAttribute("type", document.querySelector('#inputs').value);
+        
+        child_div.appendChild(labelElement);
+        child_div.appendChild(input);
+    
+        div.append(child_div);
+    },
 }
 
-function addField() {
-    var select = document.getElementById('inputs');
-    var value = select.options[select.selectedIndex].value;
-    createInput(value);
+const ChangeContractElement = {
+    changeTitleContractDefault() {    
+        document.querySelector('.contract-type-clt').textContent = "CLT"
+        document.querySelector('.contract-type-estag').textContent = "Estagiário"
+        document.querySelector('.contract-name').textContent = "Nome"
+        document.querySelector('.contract-document').textContent = "CPF"
+    },
+    
+    changeTitleContractBusiness() {        
+        document.querySelector('.contract-type-pj').textContent = "Pessoa Jurídica"
+        document.querySelector('.contract-name').textContent = "Nome Empresa"
+        document.querySelector('.contract-document').textContent = "CNPJ"
+    },
 }
 
 const Form = {
@@ -66,6 +68,8 @@ const Form = {
 
         }
     }, 
+
+    
 
     validateEmpty() {
         const {name, cnpj, rua, numero, complemento, bairro, cidade, uf} = Form.getValues();
