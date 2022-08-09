@@ -1,26 +1,14 @@
 
-function changeTitles(type) {
-
-    const elementClt = document.getElementById("profile-input-clt");
-    const elementPj = document.getElementById("profile-input-pj");
-    const elementEstag = document.getElementById("profile-input-estag");
-    
-    const profileName = document.getElementById("profile-name");
-    const profileDocument = document.getElementById("profile-document");
-
-    console.log(profileDocument)
+function changeTitles(type) {    
     console.log(type)
-    
     if(type="CLT" || type == "ESTAG") {
-        profileName.innerHTML = "";
-        profileDocument.innerHTML = "";
-        profileName.innerHTML = "Nome";
-        profileDocument.innerHTML = "CPF";
+        document.getElementById("profile-name").innerHTML = "CLT";
+        document.getElementById("profile-document").innerHTML = "CPF";
     }
 
     if(type="PJ") {
-        profileName.innerHTML = "Nome Empresa";
-        profileDocument.innerHTML = "CNPJ";
+        document.getElementById("profile-name").innerHTML = "PJ";
+        document.getElementById("profile-document").innerHTML = "CNPJ";
     }
 
 }
