@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,116 +10,126 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    
-    <form onsubmit="Form.submit(event)">
-        <h1 id="title">Termo responsabilidade Pessoa Jurídica</h1>
-        <div class="contract-type" id="contract-type">
-            <div>
-                <label class="contract-type-clt">CLT</label>
-                <input onclick="ChangeContractElement.changeTitleContractDefault()" type="radio" id="profile-input-clt" name="option" value="CLT">
-            </div>
-            <div>
-                <label class="contract-type-pj">PJ</label>
-                <input onclick="ChangeContractElement.changeTitleContractBusiness()" type="radio" id="profile-input-pj" name="option" value="PJ">
-            </div>
-            <div>
-                <label class="contract-type-estag">Estagiário</label>
-                <input onclick="changeTitleContractDefault()" type="radio" id="profile-input-estag" name="option" value="ESTAG">
-            </div>
-        </div>        
-        <div class="person-wrapper">   
-            <div>
-                <h2 class="form-title" id="form-title">Dados Pessoais</h2>
-            </div>
-            <div class="form-row">
-                <label class="contract-name">Nome Empresa</label>
-                <input placeholder="Insira nome da empresa" type="text" id="name">
-            </div>
-            <div class="form-row">
-                <label class="contract-document">CNPJ</label>
-                <input placeholder="Insira cnpj" type="text" minlength="1" maxlength="14" id="cnpj">
-            </div>
-        </div>
 
-        <div class="address-wrapper">  
-            <div>
-                <h2 class="form-title">Endereço</h2>
-            </div>
-            <div class="form-row">
-                <label>Rua</label>
-                <input placeholder="Nome da rua/av/tr" type="text" id="rua">
-            </div>
-            <div class="form-row">
-                <label>N°</label>
-                <input placeholder="Insira n°" type="number" id="numero">
-            </div>
-            <div class="form-row">
-                <label>Complemento</label>
-                <input placeholder="Insira complemento" type="text" id="complemento">
-            </div>
-            <div class="form-row">
-                <label>Bairro</label>
-                <input placeholder="Insira bairro" type="text" id="bairro">
-            </div>
-            <div class="form-row">
-                <label>Cidade</label>
-                <input placeholder="Insira cidade" type="text" id="cidade">
-            </div>
-            <div class="form-row">
-                <label>UF</label>
-                <input placeholder="Insira UF" type="text" minlength="2" maxlength="2" id="uf">
-            </div>
-        </div>
-        
-        
-        <div class="contract-type">
-            <div>
-                <label>Aquisição</label>
-                <input type="radio" id="radio" name="option" value="QA">
-            </div>
-            <div>
-                <label>Devolução</label>
-                <input type="radio" id="radio" name="option" value="DE">
-            </div>
-            <div>
-                <label>Troca de Equipamento</label>
-                <input type="radio" id="radio" name="option" value="TE">
-            </div>
-        </div>
-
-        <div class="items-wrapper" id="items">  
-            <div>
-                <h2 class="form-title">Itens</h2>
-                <div class="add-row">
-                    <button onclick="CreateField.createInput()" class="addBtn">Add</button>
-                    
-                    <select name="input" id="inputName">
-                        <option value="" class="options">Selecione o texto da label</option>
-                        <option value="Número" class="options">Número</option>
-                        <option value="Patrimônio">Patrimônio</option>
-                    </select>
-
-                    <select name="input" id="inputs">
-                        <option value="text" class="options">Selecione o tipo de input</option>
-                        <option value="text" class="options">Type text</option>
-                        <option value="number">Type number</option>
-                    </select>
+    <div class="main-wrapper">
+        <div>
+            <h1 id="title">Termo responsabilidade Pessoa Jurídica</h1>
+            <div class="contract-type" id="contract-type">
+                <div>
+                    <label class="contract-type-clt">CLT</label>
+                    <input onclick="ChangeContractElement.changeTitleContractDefault()" type="radio"
+                        id="profile-input-clt" name="option" value="CLT">
+                </div>
+                <div>
+                    <label class="contract-type-pj">Pessoa Jurídica</label>
+                    <input onclick="ChangeContractElement.changeTitleContractBusiness()" type="radio"
+                        id="profile-input-pj" name="option" value="PJ">
+                </div>
+                <div>
+                    <label class="contract-type-estag">Estagiário</label>
+                    <input onclick="changeTitleContractDefault()" type="radio" id="profile-input-estag" name="option"
+                        value="ESTAG">
                 </div>
             </div>
+
+            <form class="person-wrapper" id="form-document">
+                <div>
+                    <h2 class="form-title" id="form-title">Dados Pessoais</h2>
+                </div>
+                <div class="form-row">
+                    <label class="contract-name">Nome Empresa</label>
+                    <input placeholder="Insira nome da empresa" type="text" id="name">
+                </div>
+                <div class="form-row">
+                    <label class="contract-document">CNPJ</label>
+                    <input placeholder="Insira cnpj" type="text" minlength="1" maxlength="14" id="cnpj">
+                </div>
+            </form>
+
+            <form id="form-address">
+                <div class="address-wrapper">
+                    <div>
+                        <h2 class="form-title">Endereço</h2>
+                    </div>
+                    <div class="form-row">
+                        <label>Rua</label>
+                        <input placeholder="Nome da rua/av/tr" type="text" id="rua">
+                    </div>
+                    <div class="form-row">
+                        <label>N°</label>
+                        <input placeholder="Insira n°" type="number" id="numero">
+                    </div>
+                    <div class="form-row">
+                        <label>Complemento</label>
+                        <input placeholder="Insira complemento" type="text" id="complemento">
+                    </div>
+                    <div class="form-row">
+                        <label>Bairro</label>
+                        <input placeholder="Insira bairro" type="text" id="bairro">
+                    </div>
+                    <div class="form-row">
+                        <label>Cidade</label>
+                        <input placeholder="Insira cidade" type="text" id="cidade">
+                    </div>
+                    <div class="form-row">
+                        <label>UF</label>
+                        <input placeholder="Insira UF" type="text" minlength="2" maxlength="2" id="uf">
+                    </div>
+                </div>
+            </form>
+
+            <div class="contract-type">
+                <div>
+                    <label>Aquisição</label>
+                    <input type="radio" id="radio" name="option" value="QA">
+                </div>
+                <div>
+                    <label>Devolução</label>
+                    <input type="radio" id="radio" name="option" value="DE">
+                </div>
+                <div>
+                    <label>Troca de Equipamento</label>
+                    <input type="radio" id="radio" name="option" value="TE">
+                </div>
+            </div>
+
+            <form id="form-items">
+                <div class="items-wrapper" id="items">
+                    <div>
+                        <h2 class="form-title">Itens</h2>
+                        <div class="add-row">
+                            <button onclick="CreateField.createInput(event)" class="addBtn">Add</button>
+
+                            <select name="input" id="inputName">
+                                <option value="" class="options">Selecione o texto da label</option>
+                                <option value="Número" class="options">Número</option>
+                                <option value="Patrimônio">Patrimônio</option>
+                            </select>
+
+                            <select name="input" id="inputs">
+                                <option value="text" class="options">Selecione o tipo de input</option>
+                                <option value="text" class="options">Type text</option>
+                                <option value="number">Type number</option>
+                            </select>
+                        </div>
+                    </div>
+            </form>
 
             <div class="form-row">
                 <label>Notebook</label>
                 <input placeholder="Digite o modelo" type="text" id="nootbook">
             </div>
         </div>
-        <br>
+    
         <div class="row-btn-process">
-            <button class="btn-process">Processar</button>
+            <button class="btn-process" onclick="Form.submit()">Processar</button>
         </div>
-    </form>
+    </div>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

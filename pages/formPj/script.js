@@ -1,9 +1,10 @@
 
 const CreateField = {
-    createInput() {     
+    createInput(event) {     
+        event.preventDefault();
+
         if(document.getElementById("inputName").value == null || document.getElementById("inputName").value == "") {
-            swal("Atenção!", "Favor, preencher o nome do campo a ser criado!");
-            return false;
+            throw new Error("Favor, preencher o nome do campo a ser criado!");
         }
 
         const textLabel = document.getElementById("inputName").value;
@@ -17,6 +18,7 @@ const CreateField = {
     
         const input = document.createElement("input");
         input.setAttribute("type", document.querySelector('#inputs').value);
+        input.setAttribute("value", textLabel);
         
         child_div.appendChild(labelElement);
         child_div.appendChild(input);
@@ -41,73 +43,41 @@ const ChangeContractElement = {
 }
 
 const Form = {
-    name: document.querySelector("input#name"),
-    cnpj: document.querySelector("input#cnpj"),
-
-    rua: document.querySelector("input#rua"),
-    numero: document.querySelector("input#numero"),
-    complemento: document.querySelector("input#complemento"),
-    bairro: document.querySelector("input#bairro"),
-    cidade: document.querySelector("input#cidade"),
-    uf: document.querySelector("input#uf"),
-
-    option: document.querySelector("input#radio"),
+  
     
-
-    getValues() {
-        return {
-            name: Form.name.value,
-            cnpj: Form.cnpj.value,
-            rua: Form.rua.value,
-            numero: Form.numero.value, 
-            complemento: Form.complemento.value, 
-            bairro: Form.bairro.value, 
-            cidade: Form.cidade.value, 
-            uf: Form.uf.value,
-            option: Form.option.value, 
-
-        }
-    }, 
-
-    
-
-    validateEmpty() {
-        const {name, cnpj, rua, numero, complemento, bairro, cidade, uf} = Form.getValues();
-        
-        if(name.trim() == null || name.trim() == "" || cnpj.trim() == null || cnpj.trim() == "") {
-            
-            //swal("Atenção!", "Favor, preencha todos os campos de dados pessoais!");
-            
-            return false;
-        }
-
-        if(
-            rua.trim() == null || rua.trim() == "" || 
-            numero.trim() == null || numero.trim() == "" ||
-            complemento.trim() == null || complemento.trim() == "" ||
-            bairro.trim() == null || bairro.trim() == "" ||
-            cidade.trim() == null || cidade.trim() == "" ||
-            uf.trim() == null || uf.trim() == ""
-           ) {
-            
-            //swal("Atenção!", "Favor, preencha todos os campos de endereço!");
-            return false;
-        }
-
+    validateEmpty(value, name) {
       
-
-        
-
+        if(value.trim() == "" || value.trim() == null) {
+            throw new Error("O campo " + name + " não pode ser nulo" );
+        }
     },
+    
 
-    submit(event) {
-        event.preventDefault();
+    submit() {
+      
+        const elementsFormDocument = document.querySelectorAll('#form-document input');
+        const elementsFormAdress = document.querySelectorAll('#form-address input');
+        const elementsFormItems = document.querySelectorAll('#form-items input');
+
         try {
-            Form.validateEmpty();
 
+            elementsFormDocument.forEach(element => {
+                Form.validateEmpty(element.value, element.placeholder)
+            });
 
-        }catch(error) {
-            alert(error.message)
+            elementsFormAdress.forEach(element => {
+                Form.validateEmpty(element.value, element.placeholder)
+            });
+
+            elementsFormItems.forEach(element => {
+                Form.validateEmpty(element.value, element.placeholder)
+            });
+            
+           
+            
+        } catch(error) {
+            swal("Atenção!", error.message)
+            return false;
         }
         
     }

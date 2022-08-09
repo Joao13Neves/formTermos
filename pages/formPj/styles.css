@@ -4,25 +4,22 @@
     box-sizing: border-box;
 }
 
-/* removendo o efeito do input quando clica*/
 textarea:focus, input:focus{
     outline: none;
 }
 
-form {
+.main-wrapper {
     background-color: #fefefe;
     max-width: 1000px;
     margin: 20px auto;
 }
 
-
-/* title */
-form > h1 {
+ h1 {
     text-align: center;
     margin: 2rem 0;
     color: #00008B;
 }
-/*contract type */
+
 .contract-type {
     background-color: whitesmoke;
     padding: 1rem 5rem;
@@ -35,17 +32,7 @@ form > h1 {
     box-shadow: 10px 10px 5px 1px #eee;
 }
 
-/* container start*/
-.person-wrapper {
-    background-color: whitesmoke;
-    list-style-type: none;
-    padding: 0;
-    border-radius: 3px;
-    padding: 1.75rem 1.75rem;
-    margin-bottom: 20px;
-    box-shadow: 10px 10px 5px 1px #eee;
-}
-.address-wrapper {
+.person-wrapper, .address-wrapper {
     background-color: whitesmoke;
     list-style-type: none;
     padding: 0;
