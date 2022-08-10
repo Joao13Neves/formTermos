@@ -91,20 +91,21 @@
                     <legend class="form-title">Endereço</legend>
                     <div class="pure-g">
                         <div class="pure-u-1 pure-u-md-1-3">
-                            <label for="multi-first-name">Rua</label>
-                            <input 
-                                placeholder="Endereço" 
-                                type="text" 
-                                id="rua" 
-                                class="pure-input-1"
-                            >
-                        </div>
-                        <div class="pure-u-1 pure-u-md-1-3">
                             <label for="multi-first-name">CEP</label>
                             <input 
                                 placeholder="CEP" 
                                 type="text" 
                                 id="cep" 
+                                class="pure-input-1"
+                                onblur="Form.getAddress(this.value)"
+                            >
+                        </div>
+                        <div class="pure-u-1 pure-u-md-1-3">
+                            <label for="multi-first-name">Rua</label>
+                            <input 
+                                placeholder="Endereço" 
+                                type="text" 
+                                id="rua" 
                                 class="pure-input-1"
                             >
                         </div>

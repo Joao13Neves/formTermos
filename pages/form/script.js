@@ -159,7 +159,64 @@ const Form = {
         }  
     },
 
+
+    clearForm() {
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            document.getElementById('ibge').value=("");
+     },
+
+     callback(value) {
+        if (!("erro" in value)) {
+            document.getElementById('rua').value=(value.logradouro);
+            document.getElementById('bairro').value=(value.bairro);
+            document.getElementById('cidade').value=(value.localidade);
+            document.getElementById('uf').value=(value.uf);
+        } 
+        else {
+            Form.clearForm();
+            alert("CEP não encontrado.");
+        }
+    },
+
+     getAddress(valor) {
+       
+        let cep = valor.replace(/\D/g, '');
+        if (cep != "") {
+            var validacep = /^[0-9]{8}$/;
+
+            if(validacep.test(cep)) {
+                document.getElementById('rua').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
   
+                var script = document.createElement('script');
+
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=Form.callback';
+                document.body.appendChild(script);
+
+            } 
+            else {
+
+                clearForm();
+                throw new Error("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+    },
+    
+    callApi(cep) {
+        const url = `viacep.com.br/ws/${cep}/json/`;
+
+
+
+    },
 
     submit() {
         const elementsFormDocument = document.querySelectorAll('#form-document input');
@@ -180,6 +237,9 @@ const Form = {
 
             elementsFormAdress.forEach(element => {
                 Form.validateEmpty(element.value, element.placeholder)
+                if(element.id == "cep") {
+                    Form.callApi(element.value)
+                }
                 addressArray.push(element.value)
             });
 
@@ -195,8 +255,7 @@ const Form = {
             Form.validateEmpty(requerimentType, 'Tipo de requerimento')
          
             Form.prepareDocument(contractType, requerimentType, documentArray, addressArray, items)
-           
-                   
+       
         } catch(error) {
             swal("Atenção!", error.message)
             return false;
