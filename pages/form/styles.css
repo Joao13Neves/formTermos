@@ -94,7 +94,7 @@ textarea:focus, input:focus{
 .addBtn {
     background-color: #4CAF50; 
     color: #fff;
-    border-radius: 4px;
+    border-radius: 6px;
     padding: 10px 24px;
     transition-duration: 0.4s;
     border: 1px solid transparent;

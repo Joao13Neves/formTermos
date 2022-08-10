@@ -3,13 +3,9 @@ const CreateField = {
     createInput(event) {     
         event.preventDefault();
 
-        if(document.getElementById("inputName").value == null || document.getElementById("inputName").value == "") {
-            throw new Error("Favor, preencher o nome do campo a ser criado!");
-        }
-
-        const textLabel = document.getElementById("inputName").value;
+       
         const labelElement = document.createElement("label");
-        labelElement.innerHTML = textLabel;
+        labelElement.innerHTML = 'Patrimônio';
 
         const div = document.getElementById("items");
     
@@ -17,9 +13,9 @@ const CreateField = {
         child_div.setAttribute("class", "pure-u-1 pure-u-md-1-3 mg-t-b-10");
     
         const input = document.createElement("input");
-        input.setAttribute("type", document.querySelector('#inputs').value);
+        input.setAttribute("type", 'text');
         input.setAttribute("class", "pure-input-1");
-        input.setAttribute("value", textLabel);
+        input.setAttribute("value", "-INFORME: Nome/número do equipamento");
         
         child_div.appendChild(labelElement);
         child_div.appendChild(input);
@@ -55,99 +51,111 @@ const Form = {
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
 
-    getAquisitionTextClt(documentArray, addressArray) {
-        const text = [];
+    dataAtualFormatada(){
+        var data = new Date(),
+            dia  = data.getDate().toString(),
+            diaF = (dia.length == 1) ? '0'+dia : dia,
+            mes  = (data.getMonth()+1).toString(), //+1 pois no getMonth Janeiro começa com zero.
+            mesF = (mes.length == 1) ? '0'+mes : mes,
+            anoF = data.getFullYear();
+        return diaF+"/"+mesF+"/"+anoF;
+    },
 
-        //========================= primeiro paragrafo =========================//
-        const nameCapitalize = Form.capitalizeFirstLetter(documentArray[0])
-
-        // composição primeiro paragrafo
-        text.push('Eu, ' + nameCapitalize + ' , residente no endereço ' + addressArray[0].trim() + ', no bairro ' + addressArray[4].trim() + ', localizado na cidade');
-        text.push('de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade INFORMAR, exercendo a função de INFORMAR,');
-        text.push('inscrito no CPF sob o n° ' + documentArray[1].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela');
-        text.push(`Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.`);
-        text.push(`A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos`);
-        text.push(`especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de`);
-        text.push(`conservação, ficando ciente de que: `)
-
-
-        //========================= segundo paragrafo =========================//
-        text.push('A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos');
-        text.push('especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de');
-        text.push('conservação, ficando ciente de que: ')
-
-        //========================= descrições das condições =========================//
-        text.push('1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou');
-        text.push('extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma');
-        text.push('marca ou equivalente ao da praça;')
-
-        text.push('2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor');
-        text.push('competente;');
-
-        text.push('3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento');
-        text.push('completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata');
-        text.push('ao setor competente;');
-
-        text.push('4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.');
-        text.push('Descrição do(s) material(is):')
-
-        text.push('AQUISIÇÃO'); 
-
-
-        text.push('Atestamos que o bem foi entregue em ' + Date.now() + ', nas seguintes condições:');
-        text.push('(  ) Em perfeito estado');
-        text.push('(  ) Apresentado marcas de uso');
-        text.push('(  ) Apresentando defeito');
-        text.push('(  ) Faltando peças ou acessórios');
-
-        return text;
-    }, 
-
-    generateAcquisitionDocumentCLT(documentArray, addressArray) {
-        const textDocument = Form.getAquisitionTextClt(documentArray, addressArray);
-       
+    generateAcquisitionDocumentCLT(documentArray, addressArray, items) {
+      
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
 
         const center  = (width / 2);
 
-        const titleOfDocument = 'TERMO DE AQUISIÇÃO DE EQUIPAMENTOS'; 
-        doc.text(titleOfDocument, center,30, { align: 'center' })
-        .setFontSize(11).setFont('Arial Narrow', '');
+        const documentTitle = 'TERMO DE AQUISIÇÃO DE EQUIPAMENTOS'; 
+        doc.text(documentTitle, center,30, { align: 'center' })
+        .setFontSize(14).setFont('Calibri (Corpo)', 'bold');
 
-        let lineSpace = 50; 
-        const paragraph = 30; 
-        const normalSpace = 20; 
+      
+        //========================= primeiro paragrafo =========================//
+        const nameCapitalize = Form.capitalizeFirstLetter(documentArray[0])
+        doc.text("",20,45).setFontSize(11).setFont('Arial Narrow', 'normal');
+       
+        doc.text(30,50,'Eu, ' + nameCapitalize + ' , residente no endereço ' + addressArray[0].trim() + ', no bairro ' + addressArray[4].trim() + ', localizado na cidade\n',);
 
-        for (let index = 0; index < textDocument.length; index++) {
-            
-            if(index == 0) {
-                doc.text(textDocument[index], paragraph,lineSpace).setFontSize(11).setFont('Arial Narrow', '');
-                lineSpace += 5;
-            }
+        doc.text(20,55, 'de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade INFORMAR, exercendo a função de INFORMAR,\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
 
-            if(index == 4 ) {
-                lineSpace += 10;
-            }
+        doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
 
-            doc.text(textDocument[index], normalSpace,lineSpace).setFontSize(11).setFont('Arial Narrow', '');
-            lineSpace += 5;
-        }
+        doc.text(20,65, `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.\n`)
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
 
-        lineSpace+= 20; 
-        const signatureLine = '__________________________________'; 
-        doc.text(signatureLine, center,lineSpace, { align: 'center' }).setFontSize(11).setFont('Arial Narrow', '');
+        //========================= segundo paragrafo =========================//
+        doc.text(30,75, 'A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20,80, 'especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20,85, 'conservação, ficando ciente de que: ')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        //========================= descrições das condições =========================//
+        doc.text(20, 95, '1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 100,'extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 105,'marca ou equivalente ao da praça;')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 115, '2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 120, 'competente;')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 130, '3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 135, 'completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 140, 'ao setor competente;')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+
+        doc.text(20, 150, '4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.\n')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 155, 'Descrição do(s) material(is):')
+        .setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.text(20, 165, 'AQUISIÇÃO').setFontSize(11).setFont('Arial Narrow', 'bold');
         
-        lineSpace+= 10; 
-        doc.text('NOME DO RESPONSÁVEL', center, lineSpace, { align: 'center' })
-        doc.save('Requerimento-aquisição-clt.pdf')
+        let textItems = "";
+        console.log(items)
+        items.forEach((item, idx) => {    
+            textItems += item  + "\n"
+        })
+        console.log(textItems);
+
+        doc.text(35, 175,textItems).setFontSize(11).setFont('Arial Narrow', 'normal');        
+        doc.text(20, 200, 'Atestamos que o bem foi entregue em ' + Form.dataAtualFormatada() + ', \nnas seguintes condições:');
+        doc.text(20, 215, '(  ) Em perfeito estado\n');
+        doc.text(20, 220, '(  ) Apresentado marcas de uso\n');
+        doc.text(20, 225, '(  ) Apresentando defeito\n');
+        doc.text(20, 230, '(  ) Faltando peças ou acessórios\n');
+
+        doc.text('__________________________________', center,245, { align: 'center' }).setFontSize(11).setFont('Arial Narrow', '');
+        
+        doc.text(20,235,"").setFontSize(14).setFont('Calibri (Corpo)', 'bold');
+        doc.text('NOME RESPONSÁVEL', center, 255, { align: 'center' })
+        doc.save('Requerimento-aquisição-clt-estag.pdf')
     },
 
-    
-
-    prepareDocument(contractType, requerimentType, documentArray, addressArray) {
+    prepareDocument(contractType, requerimentType, documentArray, addressArray, items) {
         if(contractType == "CLT" && requerimentType == "AQ") {
-            Form.generateAcquisitionDocumentCLT(documentArray, addressArray)
+            Form.generateAcquisitionDocumentCLT(documentArray, addressArray, items)
         }  
     },
 
@@ -158,11 +166,13 @@ const Form = {
         const elementsFormDocument = document.querySelectorAll('#form-document input');
         const elementsFormAdress = document.querySelectorAll('#form-address input');
         const elementsFormItems = document.querySelectorAll('#form-items input');
+
         
         try {
 
             const documentArray = [];
             const addressArray = [];
+            const items = [];
 
             elementsFormDocument.forEach(element => {
                 Form.validateEmpty(element.value, element.placeholder)
@@ -174,11 +184,20 @@ const Form = {
                 addressArray.push(element.value)
             });
 
+            elementsFormItems.forEach(element => {
+                Form.validateEmpty(element.value, element.placeholder)
+                items.push(element.value)
+            });
+
             const contractType = document.getElementById('tipo-contrato').value
             const requerimentType = document.getElementById('tipo-requerimento').value
+
+            Form.validateEmpty(contractType, 'Tipo de contrato')
+            Form.validateEmpty(requerimentType, 'Tipo de requerimento')
          
-            Form.prepareDocument(contractType, requerimentType, documentArray, addressArray)
+            Form.prepareDocument(contractType, requerimentType, documentArray, addressArray, items)
            
+                   
         } catch(error) {
             swal("Atenção!", error.message)
             return false;
