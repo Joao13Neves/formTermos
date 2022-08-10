@@ -69,75 +69,53 @@ const Form = {
         const center  = (width / 2);
 
         const documentTitle = 'TERMO DE AQUISIÇÃO DE EQUIPAMENTOS'; 
+        
+        doc.setFontSize(14)
+        doc.setFont('Calibri (Corpo)', 'bold')
         doc.text(documentTitle, center,30, { align: 'center' })
-        .setFontSize(14).setFont('Calibri (Corpo)', 'bold');
+        
 
       
         //========================= primeiro paragrafo =========================//
         const nameCapitalize = Form.capitalizeFirstLetter(documentArray[0])
-        doc.text("",20,45).setFontSize(11).setFont('Arial Narrow', 'normal');
+
+        doc.setFontSize(11);
+        doc.setFont('Arial Narrow', 'normal');
+        doc.text("",20,45)
        
         doc.text(30,50,'Eu, ' + nameCapitalize + ' , residente no endereço ' + addressArray[0].trim() + ', no bairro ' + addressArray[4].trim() + ', localizado na cidade\n',);
-
         doc.text(20,55, 'de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade INFORMAR, exercendo a função de INFORMAR,\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20,65, `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.\n`)
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
-        //========================= segundo paragrafo =========================//
         doc.text(30,75, 'A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20,80, 'especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20,85, 'conservação, ficando ciente de que: ')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
-        //========================= descrições das condições =========================//
         doc.text(20, 95, '1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 100,'extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 105,'marca ou equivalente ao da praça;')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 115, '2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 120, 'competente;')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 130, '3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 135, 'completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 140, 'ao setor competente;')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
-
         doc.text(20, 150, '4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.\n')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
-
         doc.text(20, 155, 'Descrição do(s) material(is):')
-        .setFontSize(11).setFont('Arial Narrow', 'normal');
+       
 
-        doc.text(20, 165, 'AQUISIÇÃO').setFontSize(11).setFont('Arial Narrow', 'bold');
-        
+        doc.setFontSize(11)
+        doc.setFont('Arial Narrow', 'bold');
+        doc.text(center, 165, 'AQUISIÇÃO');
+
+        doc.setFontSize(11)
+        doc.setFont('Arial Narrow', 'normal');
+        doc.text(center, 166, "")
+
         let textItems = "";
         console.log(items)
         items.forEach((item, idx) => {    
             textItems += item  + "\n"
         })
-        console.log(textItems);
+  
 
         doc.text(35, 175,textItems).setFontSize(11).setFont('Arial Narrow', 'normal');        
         doc.text(20, 200, 'Atestamos que o bem foi entregue em ' + Form.dataAtualFormatada() + ', \nnas seguintes condições:');
@@ -211,19 +189,11 @@ const Form = {
         }
     },
     
-    callApi(cep) {
-        const url = `viacep.com.br/ws/${cep}/json/`;
-
-
-
-    },
-
     submit() {
         const elementsFormDocument = document.querySelectorAll('#form-document input');
         const elementsFormAdress = document.querySelectorAll('#form-address input');
         const elementsFormItems = document.querySelectorAll('#form-items input');
 
-        
         try {
 
             const documentArray = [];
@@ -237,9 +207,6 @@ const Form = {
 
             elementsFormAdress.forEach(element => {
                 Form.validateEmpty(element.value, element.placeholder)
-                if(element.id == "cep") {
-                    Form.callApi(element.value)
-                }
                 addressArray.push(element.value)
             });
 
