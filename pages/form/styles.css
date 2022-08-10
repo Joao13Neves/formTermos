@@ -10,8 +10,9 @@ textarea:focus, input:focus{
 
 .main-wrapper {
     background-color: #fefefe;
-    max-width: 1200px;
+    max-width: 50rem;
     margin: 20px auto;
+    padding: 0 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
