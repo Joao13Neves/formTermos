@@ -154,7 +154,6 @@ const Form = {
   
 
     submit() {
-        // pegando todo o nodelist de inputs e atribuindo a variáveis
         const elementsFormDocument = document.querySelectorAll('#form-document input');
         const elementsFormAdress = document.querySelectorAll('#form-address input');
         const elementsFormItems = document.querySelectorAll('#form-items input');
