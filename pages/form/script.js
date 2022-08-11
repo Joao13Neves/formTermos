@@ -90,13 +90,11 @@ const Form = {
 
 
     prepareDocument(contractType, requerimentType, documentArray, addressArray, items) {
-        if(contractType == "CLT" && requerimentType == "AQ") {
-            Form.generateAcquisitionDocumentCLTESTAG(documentArray, addressArray, items)
+        
+        if(requerimentType == "AQ") {
+            Form.generateAcquisitionDocument(documentArray, addressArray, items, requerimentType)
         } 
         
-        if(contractType == "PJ" && requerimentType == "AQ") {
-            Form.generateAcquisitionDocumentPJ(documentArray, addressArray, items)
-        }
     },
 
 
@@ -152,7 +150,7 @@ const Form = {
      },
 
      //============================== MONTAGEM DE DOCUMENTOS ================================//
-     generateAcquisitionDocument(documentArray, addressArray, items) {
+     generateAcquisitionDocument(documentArray, addressArray, items, requerimentType) {
       
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
@@ -173,12 +171,12 @@ const Form = {
         doc.text("",20,45)
        
         doc.text(30,50,'Eu, ' + nameCapitalize + ' , residente no endereço ' + addressArray[0].trim() + ', no bairro ' + addressArray[4].trim() + ', localizado na cidade\n',);
-        doc.text(20,55, 'de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade INFORMAR, exercendo a função de INFORMAR,\n')
+        doc.text(20,55, 'de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade '+  documentArray[4].trim() +', exercendo a função de '+  documentArray[1].trim() +',\n')
         
         if(requerimentType == "PJ") {
-            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[2].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
         } else if(requerimentType == "CLT" || requerimentType == "ESTAG") {
-            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', e possuinte do N° CNPJ INFORMAR, declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[2].trim() + ', e possuinte do N° '+  documentArray[3].trim() +' INFORMAR, declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
         }
        
         doc.text(20,65, `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.\n`)
@@ -225,6 +223,8 @@ const Form = {
         doc.text('NOME RESPONSÁVEL', center, 255, { align: 'center' })
         doc.save('Requerimento-aquisição-clt-estag.pdf')
      },
+
+     
 
      
     
