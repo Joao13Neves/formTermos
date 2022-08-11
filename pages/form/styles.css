@@ -88,24 +88,9 @@ textarea:focus, input:focus{
 .add-row {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    margin: 1rem 0;
-}
-.addBtn {
-    background-color: #4CAF50; 
-    color: #fff;
-    border-radius: 6px;
-    padding: 10px 24px;
-    transition-duration: 0.4s;
-    border: 1px solid transparent;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    justify-content: space-evenly;
 }
 
-.addBtn:hover {
-  background-color: white;
-  color: #333;
-  border: 1px solid #4CAF50;
-}
 
 .options {
     border: 0.5px;
@@ -133,4 +118,8 @@ textarea:focus, input:focus{
 .btn-process {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
-/* form row end */
+
+.pure-button-error {
+    color: #fff;
+    background: rgb(202, 60, 60);
+}

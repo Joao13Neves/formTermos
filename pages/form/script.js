@@ -5,10 +5,10 @@ showCnpjField();
 
 
 const CreateField = {
+    newField: 0,
+    
     createInput(event) {     
         event.preventDefault();
-
-       
         const labelElement = document.createElement("label");
         labelElement.innerHTML = 'Patrimônio';
 
@@ -16,6 +16,7 @@ const CreateField = {
     
         const child_div = document.createElement("div");
         child_div.setAttribute("class", "pure-u-1 pure-u-md-1-3 mg-t-b-10");
+        child_div.setAttribute("id", `new-div-${CreateField.newField}`);
     
         const input = document.createElement("input");
         input.setAttribute("type", 'text');
@@ -26,7 +27,24 @@ const CreateField = {
         child_div.appendChild(input);
     
         div.append(child_div);
+        CreateField.newField += 1;
     },
+    removeInput(event) {
+        event.preventDefault();
+        CreateField.newField -= 1;  
+
+
+       if(!document.querySelector('#new-div-'+CreateField.newField)) {
+            swal("Atenção", "Não existe field para remover"); return false;
+       }
+
+       if(CreateField.newField <= -2) {
+        swal("Atenção", "Não existe field para remover"); return false;
+       }
+       document.querySelector(`#new-div-${CreateField.newField}`).remove();
+
+    
+    }
 }
 
 const ChangeContractElement = {
@@ -35,14 +53,12 @@ const ChangeContractElement = {
         document.querySelector('.contract-type-estag').textContent = "Estagiário"
         document.querySelector('.contract-name').textContent = "Nome"
       
-
         document.querySelector('#isCnpj').style.display = 'none';
     },
     
     changeTitleContractBusiness() {        
         document.querySelector('.contract-type-pj').textContent = "Pessoa Jurídica"
         document.querySelector('.contract-name').textContent = "Nome Empresa"
-  
 
         document.querySelector('#isCnpj').style.display = 'block';
 
