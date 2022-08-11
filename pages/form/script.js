@@ -1,3 +1,8 @@
+function showCnpjField() {
+    document.querySelector('#isCnpj').style.display = 'none';
+}
+showCnpjField(); 
+
 
 const CreateField = {
     createInput(event) {     
@@ -29,13 +34,18 @@ const ChangeContractElement = {
         document.querySelector('.contract-type-clt').textContent = "CLT"
         document.querySelector('.contract-type-estag').textContent = "Estagiário"
         document.querySelector('.contract-name').textContent = "Nome"
-        document.querySelector('.contract-document').textContent = "CPF"
+      
+
+        document.querySelector('#isCnpj').style.display = 'none';
     },
     
     changeTitleContractBusiness() {        
         document.querySelector('.contract-type-pj').textContent = "Pessoa Jurídica"
         document.querySelector('.contract-name').textContent = "Nome Empresa"
-        document.querySelector('.contract-document').textContent = "CNPJ"
+  
+
+        document.querySelector('#isCnpj').style.display = 'block';
+
     },
 }
 
@@ -61,7 +71,72 @@ const Form = {
         return diaF+"/"+mesF+"/"+anoF;
     },
 
-    generateAcquisitionDocumentCLT(documentArray, addressArray, items) {
+
+
+    prepareDocument(contractType, requerimentType, documentArray, addressArray, items) {
+        if(contractType == "CLT" && requerimentType == "AQ") {
+            Form.generateAcquisitionDocumentCLTESTAG(documentArray, addressArray, items)
+        } 
+        
+        if(contractType == "PJ" && requerimentType == "AQ") {
+            Form.generateAcquisitionDocumentPJ(documentArray, addressArray, items)
+        }
+    },
+
+
+    clearForm() {
+            document.getElementById('rua').value=("");
+            document.getElementById('bairro').value=("");
+            document.getElementById('cidade').value=("");
+            document.getElementById('uf').value=("");
+            document.getElementById('ibge').value=("");
+     },
+
+     callback(value) {
+        if (!("erro" in value)) {
+            document.getElementById('rua').value=(value.logradouro);
+            document.getElementById('bairro').value=(value.bairro);
+            document.getElementById('cidade').value=(value.localidade);
+            document.getElementById('uf').value=(value.uf);
+        } 
+        else {
+            Form.clearForm();
+            alert("CEP não encontrado.");
+        }
+     },
+
+     getAddress(valor) {
+       
+        let cep = valor.replace(/\D/g, '');
+        if (cep != "") {
+            var validacep = /^[0-9]{8}$/;
+
+            if(validacep.test(cep)) {
+                document.getElementById('rua').value="...";
+                document.getElementById('bairro').value="...";
+                document.getElementById('cidade').value="...";
+                document.getElementById('uf').value="...";
+  
+                var script = document.createElement('script');
+
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=Form.callback';
+                document.body.appendChild(script);
+
+            } 
+            else {
+
+                clearForm();
+                throw new Error("Formato de CEP inválido.");
+            }
+        } //end if.
+        else {
+            //cep sem valor, limpa formulário.
+            limpa_formulário_cep();
+        }
+     },
+
+     //============================== MONTAGEM DE DOCUMENTOS ================================//
+     generateAcquisitionDocument(documentArray, addressArray, items) {
       
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
@@ -74,8 +149,6 @@ const Form = {
         doc.setFont('Calibri (Corpo)', 'bold')
         doc.text(documentTitle, center,30, { align: 'center' })
         
-
-      
         //========================= primeiro paragrafo =========================//
         const nameCapitalize = Form.capitalizeFirstLetter(documentArray[0])
 
@@ -85,7 +158,13 @@ const Form = {
        
         doc.text(30,50,'Eu, ' + nameCapitalize + ' , residente no endereço ' + addressArray[0].trim() + ', no bairro ' + addressArray[4].trim() + ', localizado na cidade\n',);
         doc.text(20,55, 'de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade INFORMAR, exercendo a função de INFORMAR,\n')
-        doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+        
+        if(requerimentType == "PJ") {
+            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+        } else if(requerimentType == "CLT" || requerimentType == "ESTAG") {
+            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[1].trim() + ', e possuinte do N° CNPJ INFORMAR, declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+        }
+       
         doc.text(20,65, `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.\n`)
         doc.text(30,75, 'A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos\n')
         doc.text(20,80, 'especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de\n')
@@ -129,65 +208,9 @@ const Form = {
         doc.text(20,235,"").setFontSize(14).setFont('Calibri (Corpo)', 'bold');
         doc.text('NOME RESPONSÁVEL', center, 255, { align: 'center' })
         doc.save('Requerimento-aquisição-clt-estag.pdf')
-    },
-
-    prepareDocument(contractType, requerimentType, documentArray, addressArray, items) {
-        if(contractType == "CLT" && requerimentType == "AQ") {
-            Form.generateAcquisitionDocumentCLT(documentArray, addressArray, items)
-        }  
-    },
-
-
-    clearForm() {
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-            document.getElementById('cidade').value=("");
-            document.getElementById('uf').value=("");
-            document.getElementById('ibge').value=("");
      },
 
-     callback(value) {
-        if (!("erro" in value)) {
-            document.getElementById('rua').value=(value.logradouro);
-            document.getElementById('bairro').value=(value.bairro);
-            document.getElementById('cidade').value=(value.localidade);
-            document.getElementById('uf').value=(value.uf);
-        } 
-        else {
-            Form.clearForm();
-            alert("CEP não encontrado.");
-        }
-    },
-
-     getAddress(valor) {
-       
-        let cep = valor.replace(/\D/g, '');
-        if (cep != "") {
-            var validacep = /^[0-9]{8}$/;
-
-            if(validacep.test(cep)) {
-                document.getElementById('rua').value="...";
-                document.getElementById('bairro').value="...";
-                document.getElementById('cidade').value="...";
-                document.getElementById('uf').value="...";
-  
-                var script = document.createElement('script');
-
-                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=Form.callback';
-                document.body.appendChild(script);
-
-            } 
-            else {
-
-                clearForm();
-                throw new Error("Formato de CEP inválido.");
-            }
-        } //end if.
-        else {
-            //cep sem valor, limpa formulário.
-            limpa_formulário_cep();
-        }
-    },
+     
     
     submit() {
         const elementsFormDocument = document.querySelectorAll('#form-document input');
