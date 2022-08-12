@@ -20,6 +20,12 @@ textarea:focus, input:focus{
 
  h1 {
     text-align: center;
+    margin: 1rem 0;
+    color: #00008B;
+}
+
+h3{
+    text-align: center;
     margin: 2rem 0;
     color: #00008B;
 }
