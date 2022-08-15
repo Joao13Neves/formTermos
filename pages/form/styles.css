@@ -30,6 +30,47 @@ h3{
     color: #00008B;
 }
 
+#name {
+    display: block;
+    padding: 15px;
+    width: 550px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f55d16
+    ;
+}
+
+#ocupacao {
+    display: block;
+    padding: 15px;
+    width: 550px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f55d16;
+}
+
+#cpf {
+    display: block;
+    padding: 15px;
+    width: 550px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f55d16;
+}
+
+#cnpj {
+    display: block;
+    padding: 15px;
+    width: 550px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f55d16;
+}
+
+#nacionalidade {
+    display: block;
+    padding: 15px;
+    width: 550px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f55d16;
+}
+
 .contract-type {
    
     padding: 1rem 5rem;
