@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: ;
 }
 
 textarea:focus, input:focus{
@@ -32,8 +33,8 @@ h3{
 
 #name {
     display: block;
-    padding: 15px;
-    width: 550px;
+    padding: 10px;
+    width: 750px;
     border-radius: 10px;
     box-shadow: 3px 3px  0px #f55d16
     ;
@@ -41,36 +42,91 @@ h3{
 
 #ocupacao {
     display: block;
-    padding: 15px;
-    width: 550px;
+    padding: 10px;
+    width: 750px;
     border-radius: 10px;
     box-shadow: 3px 3px  0px #f55d16;
 }
 
 #cpf {
     display: block;
-    padding: 15px;
-    width: 550px;
+    padding: 10px;
+    width: 750px;
     border-radius: 10px;
     box-shadow: 3px 3px  0px #f55d16;
 }
 
 #cnpj {
     display: block;
-    padding: 15px;
-    width: 550px;
+    padding: 10px;
+    width: 750px;
     border-radius: 10px;
     box-shadow: 3px 3px  0px #f55d16;
 }
 
 #nacionalidade {
     display: block;
-    padding: 15px;
-    width: 550px;
+    padding: 10px;
+    width: 750px;
     border-radius: 10px;
     box-shadow: 3px 3px  0px #f55d16;
 }
 
+#cep {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
+
+#rua {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
+
+#numero {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
+
+#complemento {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
+
+#bairro {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
+
+#cidade {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
+
+#uf {
+    display: block;
+    padding: 10px;
+    width: 750px;
+    border-radius: 10px;
+    box-shadow: 3px 3px  0px #f77c3e;
+}
 .contract-type {
    
     padding: 1rem 5rem;
