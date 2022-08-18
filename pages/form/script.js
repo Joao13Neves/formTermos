@@ -44,13 +44,20 @@ const SELECTORS = {
 const ENUM_ATTRIBUTES = {
     CLASS: 'class',
     ID: 'id',
+    ID_OCUPACAO: "ocupacao",
+    ID_CPF: "cpf",
+    ID_CNPJ: "cnpj",
     TYPE: 'type',
     VALUE: 'value',
     TYPE_TEXT: 'text',
     TYPE_NUMBER: 'number',
     TYPE_EMAIL: 'email',
     FOR: 'for',
-    PLACEHOLDER: 'placeholder'
+    PLACEHOLDER: 'placeholder',
+    MIN_LENGTH_1: " minlength='1' ",
+    MAX_LENGTH_14: " maxlength='14' ",
+    NACIONALIDADE: 'nacionalidade'
+    
 }
 
 const ENUM_ATTRIBUTES_TEXT  = { 
@@ -61,7 +68,7 @@ const ENUM_PLACEHOLDER = {
     NACIONALIDADE: 'Nacionalidade', 
     DOCUMENTO_CNPJ: 'Documento (CNPJ)',
     DOCUMENTO_CPF: 'Documento (CPF)',
-    FUNCAO: 'Função',
+    OCUPATION: 'Ocupação',
     NOME: 'Nome (NOME)',
     NOME_EMPRESA: 'Nome (EMPRESA)',
 
@@ -97,20 +104,20 @@ const DESCRIPTIONS = {
     NOME: 'Nome',
     NOME_EMPRESA: 'Nome Empresa',
     FIELD: ' O campo ',
-    NOT_NULL: ' Não pode ser nulo! '
+    NOT_NULL: ' Não pode ser nulo! ',
+    OCUPATION: 'Ocupação',
 }
 
-function buildCollaboratorForm(contractType) {
-
-    const form = document.createElement(TAGS.FORM);
+function buildForm() {
+    let form = document.createElement(TAGS.FORM);
     form.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_FORM_STACKED); 
     form.setAttribute(ENUM_ATTRIBUTES.ID, ENUM_STYLES.FORM_DOCUMENT);
+    return form;
+}
 
-    const fieldSet = document.createElement(TAGS.FIELDSET); 
-
-    const legend = document.createElement(TAGS.LEGEND);
+function buildLegend(contractType) {
+    let legend = document.createElement(TAGS.LEGEND);
     legend.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.FORM_TITLE);
-    
     if(contractType == ENUM_CONTRACT_TYPE.CLT) {
         legend.textContent = DESCRIPTIONS.PERSONAL_DATA; 
     }
@@ -122,43 +129,255 @@ function buildCollaboratorForm(contractType) {
     if(contractType == ENUM_CONTRACT_TYPE.PJ) {
         legend.textContent = DESCRIPTIONS.COMPANY_DATA;
     }
-    
-    const div = document.createElement(TAGS.DIV);
+    return legend;
+}
+
+function buildDivPureG() {
+    let div = document.createElement(TAGS.DIV);
     div.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_G);
+    return div;
+}
 
-    const divChild = document.createElement(TAGS.DIV);
-    divChild.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_U_1_MD_1_3);
+function inputConfiguration(contractType, value) {
 
-    const label = document.createElement(TAGS.LABEL);
-    label.setAttribute(ENUM_ATTRIBUTES.FOR,ENUM_ATTRIBUTES.MULTI_FIRST_NAME);
-    label.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.CONTRACT_NAME);
+    let configInput = {
+        ID: '',
+        TYPE: '',
+        PLACEHOLDER: '',
+        CLASS: '', 
+        MAX_LENGTH: '',
+        MIN_LENGTH: ''
+    }
 
     if(contractType == ENUM_CONTRACT_TYPE.CLT) {
-        label.textContent = ENUM_PLACEHOLDER.NOME;
+        if(value == 0) {
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.NOME;
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 1) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.OCUPATION;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.MAX_LENGTH = ENUM_ATTRIBUTES.MAX_LENGTH_14;
+            configInput.MIN_LENGTH = ENUM_ATTRIBUTES.MIN_LENGTH_1;
+            configInput.ID = ENUM_ATTRIBUTES.ID_OCUPACAO; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 2) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.DOCUMENTO_CPF;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.MAX_LENGTH = ENUM_ATTRIBUTES.MAX_LENGTH_14;
+            configInput.MIN_LENGTH = ENUM_ATTRIBUTES.MIN_LENGTH_1;
+            configInput.ID = ENUM_ATTRIBUTES.ID_CPF; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 3) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.DOCUMENTO_CNPJ;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.MAX_LENGTH = ENUM_ATTRIBUTES.MAX_LENGTH_14;
+            configInput.MIN_LENGTH = ENUM_ATTRIBUTES.MIN_LENGTH_1;
+            configInput.ID = ENUM_ATTRIBUTES.ID_CNPJ; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 4) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.NACIONALIDADE;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.ID = ENUM_ATTRIBUTES.NACIONALIDADE; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
     }
 
     if(contractType == ENUM_CONTRACT_TYPE.PJ) {
-        label.textContent = ENUM_PLACEHOLDER.PJ;
+        if(value == 0) {
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.NOME_EMPRESA;
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 1) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.OCUPATION;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.MAX_LENGTH = ENUM_ATTRIBUTES.MAX_LENGTH_14;
+            configInput.MIN_LENGTH = ENUM_ATTRIBUTES.MIN_LENGTH_1;
+            configInput.ID = ENUM_ATTRIBUTES.ID_OCUPACAO; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 2) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.DOCUMENTO_CPF;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.MAX_LENGTH = ENUM_ATTRIBUTES.MAX_LENGTH_14;
+            configInput.MIN_LENGTH = ENUM_ATTRIBUTES.MIN_LENGTH_1;
+            configInput.ID = ENUM_ATTRIBUTES.ID_CPF; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 3) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.DOCUMENTO_CNPJ;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.MAX_LENGTH = ENUM_ATTRIBUTES.MAX_LENGTH_14;
+            configInput.MIN_LENGTH = ENUM_ATTRIBUTES.MIN_LENGTH_1;
+            configInput.ID = ENUM_ATTRIBUTES.ID_CNPJ; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
+        if(value == 4) {
+            configInput.PLACEHOLDER = ENUM_PLACEHOLDER.NACIONALIDADE;
+            configInput.TYPE = ENUM_ATTRIBUTES.TYPE_TEXT;
+            configInput.ID = ENUM_ATTRIBUTES.NACIONALIDADE; 
+            configInput.CLASS = ENUM_STYLES.PURE_INPUT_1
+        }
+
     }
-
-    if(contractType == ENUM_CONTRACT_TYPE.ESTAG) {
-        label.textContent = ENUM_PLACEHOLDER.ESTAG;
-    }
-
-
-    const input = document.createElement(TAGS.INPUT);
-    input.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_INPUT_1);
-    input.setAttribute(ENUM_ATTRIBUTES.ID, ENUM_ATTRIBUTES.ID);
-    input.setAttribute(ENUM_ATTRIBUTES.TYPE_TEXT, ENUM_ATTRIBUTES.TYPE_TEXT);
-    input.setAttribute(ENUM_ATTRIBUTES.PLACEHOLDER, ENUM_PLACEHOLDER.NOME)
     
+    return configInput;
 }
+
+function buildDivInput() {
+    let divChild = document.createElement(TAGS.DIV);
+    divChild.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_U_1_MD_1_3);
+    return divChild;
+}
+
+function buildInput(contractType, value) {
+    
+    let INPUT_CONFIG = inputConfiguration(contractType, value);
+    
+    let element = document.createElement(TAGS.INPUT);
+    
+    element.setAttribute(ENUM_ATTRIBUTES.CLASS, INPUT_CONFIG.CLASS);
+    element.setAttribute(ENUM_ATTRIBUTES.ID, INPUT_CONFIG.ID);
+    element.setAttribute(ENUM_ATTRIBUTES.TYPE_TEXT, INPUT_CONFIG.TYPE);
+    element.setAttribute(ENUM_ATTRIBUTES.PLACEHOLDER, INPUT_CONFIG.PLACEHOLDER);
+
+    return element;
+}
+
+function labelConfiguration(contractType, value) {
+
+    let LABEL_CONFIGURATION = {
+        TEXT_CONTENT: null,
+        FOR: null
+    }
+
+
+    if(contractType === ENUM_CONTRACT_TYPE.CLT) {
+
+        switch(value) {
+            case 0:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.NOME;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break;
+
+            case 1:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.OCUPATION;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break
+
+            case 2:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.DOCUMENTO_CPF;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break;
+
+            case 3:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.NACIONALIDADE;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break;
+        }
+
+        return LABEL_CONFIGURATION;
+    }
+
+    if(contractType === ENUM_CONTRACT_TYPE.PJ) {
+        
+        switch(value) {
+            case 0:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.NOME_EMPRESA;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break;
+
+            case 1:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.OCUPATION;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break
+
+            case 2:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.DOCUMENTO_CPF;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break;
+
+            case 3:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.DOCUMENTO_CNPJ;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break
+
+            case 4:
+                LABEL_CONFIGURATION.TEXT_CONTENT = ENUM_PLACEHOLDER.NACIONALIDADE;
+                LABEL_CONFIGURATION.FOR = ENUM_ATTRIBUTES_TEXT.MULTI_FIRST_NAME;
+            break
+        }
+
+        return LABEL_CONFIGURATION;
+    }
+}
+
+function buildLabel(contractType, value) {
+    let LABEL_CONFIG = labelConfiguration(contractType, value)
+    console.log(LABEL_CONFIG)   
+    let element = document.createElement(TAGS.LABEL);
+    element.setAttribute(ENUM_ATTRIBUTES.FOR,LABEL_CONFIG.FOR);
+    element.textContent = LABEL_CONFIG.TEXT_CONTENT;
+
+    if(value == 0) {
+        element.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.CONTRACT_NAME);
+    }
+    return element;
+}
+
+function buildCollaboratorForm(contractType) {
+    const form = buildForm();
+    const fieldSet = document.createElement(TAGS.FIELDSET); 
+    const legend = buildLegend(contractType);
+    fieldSet.appendChild(legend);
+    const div = buildDivPureG();
+    fieldSet.appendChild(div);
+
+    let forLimit = 0;
+    if(contractType == ENUM_CONTRACT_TYPE.PJ) {
+        forLimit = 4;
+    } else {
+        forLimit = 3;
+    }
+
+    for(let i=0; i<= forLimit; i++) {
+        let divChild = buildDivInput();
+        let input = buildInput(contractType, i);
+        let label = buildLabel(contractType, i);
+
+        divChild.appendChild(label);
+        divChild.appendChild(input);
+        
+        div.appendChild(divChild);
+    }  
+    form.appendChild(fieldSet);    
+    console.log(form)
+}
+
 
 
 function showCnpjField() {
     document.querySelector(SELECTORS.IS_CNPJ)
     .style.display = ENUM_STYLES.DISPLAY_NONE;
 }
+
+buildCollaboratorForm(ENUM_CONTRACT_TYPE.CLT);
+
+
+
 showCnpjField(); 
 
 
@@ -191,7 +410,6 @@ const CreateField = {
         event.preventDefault();
         CreateField.newField -= 1;  
 
-
        if(!document.querySelector('#new-div-'+CreateField.newField)) {
             swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
@@ -200,8 +418,6 @@ const CreateField = {
         swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
        document.querySelector(`#new-div-${CreateField.newField}`).remove();
-
-    
     }
 }
 
@@ -209,17 +425,14 @@ const ChangeContractElement = {
     changeTitleContractDefault() {    
         document.querySelector(SELECTORS.CONTRACT_TYPE_CLT).textContent = DESCRIPTIONS.CLT
         document.querySelector(SELECTORS.CONTRACT_TYPE_ESTAG).textContent = DESCRIPTIONS.ESTAG
-        document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.NOME
-      
+        document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.NOME    
         document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.NONE;
     },
     
     changeTitleContractBusiness() {        
         document.querySelector(CONTRACT_TYPE_PJ).textContent = DESCRIPTIONS.PJ
         document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.NOME_EMPRESA
-
         document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.DISPLAY_BLOCK;
-
     },
 }
 
@@ -303,7 +516,7 @@ const Form = {
         } //end if.
         else {
             //cep sem valor, limpa formulário.
-            limpa_formulário_cep();
+            clearForm();
         }
      },
 
