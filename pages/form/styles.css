@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: ;
+    background-color: whitesmoke;
 }
 
 textarea:focus, input:focus{
@@ -10,7 +10,7 @@ textarea:focus, input:focus{
 }
 
 .main-wrapper {
-    background-color: #fefefe;
+    background-color: whitesmoke;
     max-width: 50rem;
     margin: 20px auto;
     padding: 0 2rem;
@@ -31,13 +31,16 @@ h3{
     color: #00008B;
 }
 
+#tipo-contrato {
+    
+}
+
 #name {
     display: block;
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f55d16
-    ;
+    box-shadow: 3px 3px  0px #f55d16;
 }
 
 #ocupacao {
@@ -127,6 +130,7 @@ h3{
     border-radius: 10px;
     box-shadow: 3px 3px  0px #f77c3e;
 }
+
 .contract-type {
    
     padding: 1rem 5rem;
@@ -210,7 +214,7 @@ h3{
 }
 .btn-process {
     background-color: #4CAF50; 
-    color: #fff;
+    color: black;
     border-radius: 4px;
     padding: 10px 24px;
     transition-duration: 0.4s;
