@@ -81,7 +81,8 @@ const TAGS = {
     FIELDSET: 'fieldset', 
     LEGEND: 'legend',
     LABEL: 'label',
-    INPUT: 'input'
+    INPUT: 'input',
+    ITEMS: 'items'
 }
 
 const DESCRIPTIONS = {
@@ -138,7 +139,7 @@ const FONT_STYLE = {
 const ACQUISITION_TERM = [
     `TERMO DE AQUISIÇÃO DE EQUIPAMENTOS`, 
     `Eu, NAME , residente no endereço ADDRESS, no bairro DISTRICT, localizado na cidade`,
-    'de CITY, no CEP ZIP_CODE, de nacionalidade NATIONALITY, exercendo a função de OCCUPATION'
+    'de CITY, no CEP ZIP_CODE, de nacionalidade NATIONALITY, exercendo a função de OCCUPATION',
     `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.`,
     `A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos`,
     `especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de`,
@@ -201,12 +202,12 @@ const CreateField = {
         const labelElement = document.createElement(TAGS.LABEL);
         labelElement.innerHTML = TAGS.PATRIMONY;
 
-        const div = document.getElementById(TAGS.items);
+        const div = document.getElementById(TAGS.ITEMS);
     
         const child_div = document.createElement(TAGS.DIV);
         
-        let addInput = HANDLE_NEW_INPUT + CreateField.newField; 
-
+        let addInput = SELECTORS.HANDLE_NEW_INPUT + CreateField.newField; 
+    
         child_div.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_U_1_MD_1_3_MG_T_B_10);
         child_div.setAttribute(ENUM_ATTRIBUTES.ID, addInput);
     
@@ -219,7 +220,7 @@ const CreateField = {
         child_div.appendChild(input);
     
         div.append(child_div);
-        CreateField.newField += 1;
+        CreateField.newField++;
     },
     
     removeInput(event) {
@@ -227,7 +228,7 @@ const CreateField = {
 
        CreateField.newField -= 1;  
        let removeInput = (SELECTORS.HANDLE_NEW_INPUT + CreateField.newField); 
-       
+      console.log(removeInput)
        if(!document.querySelector(removeInput)) {
             swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
@@ -300,7 +301,6 @@ const Form = {
         }
      },
 
-
     replaceTextCollaborator(text, collaborator) {
         switch(text) {
             case 'NAME':
@@ -363,7 +363,7 @@ const Form = {
     generateDocument(contractType, requerimentType, collaborator, address, itemsArray) {
       
 
-        if(contractType == ENUM_CONTRACT_TYPE.CLT || contractType == ENUM_CONTRACT_TYPE.CLT) {
+        if(contractType == ENUM_CONTRACT_TYPE.CLT || contractType == ENUM_CONTRACT_TYPE.ESTAG) {
 
             getDocument(requerimentType, collaborator, address, itemsArray)
 
