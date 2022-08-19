@@ -39,11 +39,26 @@ const SELECTORS = {
     CONTRACT_TYPE_PJ: '.contract-type-pj',
     CONTRACT_TYPE_ESTAG: '.contract-type-estag',
     CONTRACT_NAME: '.contract-name',
-    RUA: 'rua',
-    BAIRRO: 'bairro',
-    CIDADE: 'cidade',
-    UF: 'uf',
     HANDLE_NEW_INPUT: '#new-div-', 
+
+    REQUERIMENT_TYPE: 'tipo-requerimento',
+    CONTRACT_TYPE: 'tipo-contrato',
+    
+    //document
+    NAME: 'name', 
+    OCUPATION: 'ocupacao', 
+    CPF: 'cpf', 
+    CNPJ: 'cnpj', 
+    NATIONALITY: 'nacionalidade', 
+
+    //address
+    ZIPCODE: 'cep',
+    STREET: 'rua', 
+    NUMBER: 'numero', 
+    COMPLEMENT: 'complemento', 
+    DISTRICT: 'bairro',
+    CITY: 'cidade',
+    UF: 'uf'
 }
 
 const ENUM_ATTRIBUTES = {
@@ -84,10 +99,24 @@ const DESCRIPTIONS = {
     CEP_NOT_FOUND: 'CEP não encontrado.',
     INVALID_CEP_FORMAT: "Formato de CEP inválido.",
     CONTRACT_TYPE: 'Tipo de contrato', 
-    REQUERIMENT_TYPE: 'Tipo de requerimento'
+    REQUERIMENT_TYPE: 'Tipo de requerimento',
+
+    //collaborator
+    NAME: 'Nome',
+    CPF: 'Cpf',
+    CNPJ: 'Cnpj',
+    OCCUPATION: 'Ocupação',
+    NATIONALITY: 'Nacionalidade',
+
+    //address
+    ZIPCODE: 'Cep',
+    STREET: 'Rua', 
+    NUMBER: 'Número', 
+    COMPLEMENT: 'Complemento', 
+    DISTRICT: 'Bairro',
+    CITY: 'Cidade',
+    UF: 'Uf'
 }
-
-
 
 const FONT_FAMILY = {
     ARIAL_NARROW: 'Arial Narrow',
@@ -145,6 +174,16 @@ function changeTitleContractBusiness() {
     document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.DISPLAY_BLOCK;
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function validateEmpty(value, name) {
+    if(!value.trim()) {
+        throw new Error(DESCRIPTIONS.FIELD + name + DESCRIPTIONS.NOT_NULL);
+    }
+}
+
 function showCnpjField() {
     document.querySelector(SELECTORS.IS_CNPJ)
     .style.display = ENUM_STYLES.DISPLAY_NONE;
@@ -200,16 +239,6 @@ const CreateField = {
 
 const Form = {
 
-    validateEmpty(value, name) {
-        if(!value.trim()) {
-            throw new Error(DESCRIPTIONS.FIELD + name + DESCRIPTIONS.NOT_NULL);
-        }
-    },
-    
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    },
-
     getDate(){
         var data = new Date(),
             dia  = data.getDate().toString(),
@@ -220,30 +249,18 @@ const Form = {
         return diaF+"/"+mesF+"/"+anoF;
     },
 
-
-
-    prepareDocument(requerimentType, documentArray, addressArray, items) {
-        
-        if(requerimentType == ENUM_REQUERIMENT_TYPE.AQ) {
-            Form.
-generateDocument(documentArray, addressArray, items, requerimentType)
-        } 
-        
-    },
-
-
     clearForm() {
-            document.getElementById(SELECTORS.RUA).value=("");
-            document.getElementById(SELECTORS.BAIRRO).value=("");
-            document.getElementById(SELECTORS.CIDADE).value=("");
+            document.getElementById(SELECTORS.STREET).value=("");
+            document.getElementById(SELECTORS.DISTRICT).value=("");
+            document.getElementById(SELECTORS.CITY).value=("");
             document.getElementById(SELECTORS.UF).value=("");
      },
 
      callback(value) {
         if (!("erro" in value)) {
-            document.getElementById(SELECTORS.RUA).value=(value.logradouro);
-            document.getElementById(SELECTORS.BAIRRO).value=(value.bairro);
-            document.getElementById(SELECTORS.CIDADE).value=(value.localidade);
+            document.getElementById(SELECTORS.STREET).value=(value.logradouro);
+            document.getElementById(SELECTORS.DISTRICT).value=(value.bairro);
+            document.getElementById(SELECTORS.CITY).value=(value.localidade);
             document.getElementById(SELECTORS.UF).value=(value.uf);
         } 
         else {
@@ -259,9 +276,9 @@ generateDocument(documentArray, addressArray, items, requerimentType)
             var validacep = /^[0-9]{8}$/;
 
             if(validacep.test(cep)) {
-                document.getElementById(SELECTORS.RUA).value="...";
-                document.getElementById(SELECTORS.BAIRRO).value="...";
-                document.getElementById(SELECTORS.CIDADE).value="...";
+                document.getElementById(SELECTORS.STREET).value="...";
+                document.getElementById(SELECTORS.DISTRICT).value="...";
+                document.getElementById(SELECTORS.CITY).value="...";
                 document.getElementById(SELECTORS.UF).value="...";
   
                 var script = document.createElement('script');
@@ -282,12 +299,80 @@ generateDocument(documentArray, addressArray, items, requerimentType)
      },
 
 
-    generateDocument(documentArray, addressArray, items, requerimentType) {
+    replaceDocumentText(text, documentArray) {
+        switch(text) {
+            case 'NAME':
+                return text.replace(/NAME/gi, capitalizeFirstLetter(documentArray[0]));
+
+            case 'NATIONALITY':
+                return text.replace(/NATIONALITY/gi, value);
+           
+            default: 
+                return "";
+        }
+    },
+
+    replaceAdressText(text, addressArray) {
+        switch(text) {
+            case 'ADDRESS':
+                return text.replace(/ADDRESS/gi, addressArray[1] + " " + addressArray[2]);
       
+            case 'DISTRICT':
+                return text.replace(/DISTRICT/gi, addressArray[4]);
+           
+
+            case 'CITY':
+                return text.replace(/CITY/gi, addressArray[5]);
+           
+            case 'ZIP_CODE':
+                return text.replace(/ZIP_CODE/gi, addressArray[0]);
+           
+            default: 
+                return "";
+
+        }
+    },
+
+    getDocument(requerimentType, documentArray, addressArray, itemsArray) {
+
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
-
         const center  = (width / 2);
+
+        if(requerimentType == ENUM_REQUERIMENT_TYPE.AQ) {
+
+            ACQUISITION_TERM.forEach(text => {
+
+                let text = replaceDocumentText(text, documentArray);
+                let text = replaceAddressText(text, addressArray);
+
+            });
+        }
+
+        if(requerimentType == ENUM_REQUERIMENT_TYPE.CHG) {
+           
+        }
+
+        if(requerimentType == ENUM_REQUERIMENT_TYPE.DEV) {
+           
+        }
+
+    },
+    
+    generateDocument(contractType, requerimentType, documentArray, addressArray, itemsArray) {
+      
+
+        if(contractType == ENUM_CONTRACT_TYPE.CLT || contractType == ENUM_CONTRACT_TYPE.CLT) {
+
+            getDocument(requerimentType, documentArray, addressArray, itemsArray)
+
+        }
+
+        if(contractType == ENUM_CONTRACT_TYPE.PJ) {
+
+            getDocument(requerimentType, documentArray, addressArray, itemsArray)
+
+        }
 
         const documentTitle = 'TERMO DE AQUISIÇÃO DE EQUIPAMENTOS'; 
         
@@ -296,7 +381,7 @@ generateDocument(documentArray, addressArray, items, requerimentType)
         doc.text(documentTitle, center,30, { align: 'center' })
         
         //========================= primeiro paragrafo =========================//
-        const nameCapitalize = Form.capitalizeFirstLetter(documentArray[0])
+        const nameCapitalize = capitalizeFirstLetter(documentArray[0])
 
         doc.setFontSize(11);
         doc.setFont('Arial Narrow', 'normal');
@@ -357,38 +442,58 @@ generateDocument(documentArray, addressArray, items, requerimentType)
      },
 
     submit() {
-        const elementsFormDocument = document.querySelectorAll(SELECTORS.FORM_DOCUMENT_INPUT);
-        const elementsFormAdress = document.querySelectorAll(SELECTORS.FORM_ADDRESS_INPUT);
-        const elementsFormItems = document.querySelectorAll(SELECTORS.FORM_ITEMS_INPUT);
+
+        const  collaborator = {
+            name: document.querySelector(SELECTORS.NAME),
+            cpf: document.querySelector(SELECTORS.CPF),
+            cnpj: document.querySelector(SELECTORS.CNPJ),
+            occupation: document.querySelector(SELECTORS.OCUPATION),
+            nationality: document.querySelector(SELECTORS.NATIONALITY)
+        }
+
+        const adress = {
+            zipcode: document.querySelector(SELECTORS.ZIPCODE),
+            street: document.querySelector(SELECTORS.STREET), 
+            district: document.querySelector(SELECTORS.DISTRICT), 
+            city: document.querySelector(SELECTORS.CITY),
+            uf: document.querySelector(SELECTORS.UF),
+        }
+
 
         try {
 
-            const documentArray = [];
-            const addressArray = [];
-            const items = [];
+            validateEmpty(collaborator.name, DESCRIPTIONS.NAME);
+            validateEmpty(collaborator.cpf, DESCRIPTIONS.CPF);
+            
+            if(collaborator.cnpj) {
+                validateEmpty(collaborator.cnpj, DESCRIPTIONS.CNPJ);
+            }
 
-            elementsFormDocument.forEach(element => {
-                Form.validateEmpty(element.value, element.placeholder)
-                documentArray.push(element.value)
-            });
+            validateEmpty(collaborator.occupation, DESCRIPTIONS.OCCUPATION);
+            validateEmpty(collaborator.nationality, DESCRIPTIONS.NATIONALITY);
 
-            elementsFormAdress.forEach(element => {
-                Form.validateEmpty(element.value, element.placeholder)
-                addressArray.push(element.value)
-            });
+            validateEmpty(adress.zipcode, DESCRIPTIONS.ZIPCODE);
+            validateEmpty(adress.street, DESCRIPTIONS.STREET);
+            validateEmpty(adress.city, DESCRIPTIONS.CITY);
+            validateEmpty(adress.district, DESCRIPTIONS.DISTRICT);
+            validateEmpty(adress.uf, DESCRIPTIONS.UF);
 
+            const elementsFormItems = document.querySelectorAll(SELECTORS.FORM_ITEMS_INPUT);
+            const itemsArray = [];
+            
             elementsFormItems.forEach(element => {
-                Form.validateEmpty(element.value, element.placeholder)
-                items.push(element.value)
+                validateEmpty(element.value, element.placeholder)
+                itemsArray.push(element.value)
             });
 
-            const contractType = document.getElementById('tipo-contrato').value
-            const requerimentType = document.getElementById('tipo-requerimento').value
+            const contractType = document.getElementById(SELECTORS.CONTRACT_TYPE).value
+            const requerimentType = document.getElementById(SELECTORS.REQUERIMENT_TYPE).value
 
-            Form.validateEmpty(contractType, DESCRIPTIONS.CONTRACT_TYPE);
-            Form.validateEmpty(requerimentType, DESCRIPTIONS.REQUERIMENT_TYPE);
+            validateEmpty(contractType, DESCRIPTIONS.CONTRACT_TYPE);
+            validateEmpty(requerimentType, DESCRIPTIONS.REQUERIMENT_TYPE);
          
-            Form.prepareDocument(contractType, requerimentType, documentArray, addressArray, items)
+            Form.generateDocument(contractType, requerimentType, documentArray, addressArray, itemsArray)
+          
        
         } catch(error) {
             swal(DESCRIPTIONS.WARNING, error.message)
