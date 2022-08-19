@@ -39,6 +39,11 @@ const SELECTORS = {
     CONTRACT_TYPE_PJ: '.contract-type-pj',
     CONTRACT_TYPE_ESTAG: '.contract-type-estag',
     CONTRACT_NAME: '.contract-name',
+    RUA: 'rua',
+    BAIRRO: 'bairro',
+    CIDADE: 'cidade',
+    UF: 'uf',
+    HANDLE_NEW_INPUT: '#new-div-', 
 }
 
 const ENUM_ATTRIBUTES = {
@@ -51,28 +56,6 @@ const ENUM_ATTRIBUTES = {
     TYPE_EMAIL: 'email',
     FOR: 'for',
     PLACEHOLDER: 'placeholder'
-}
-
-const ENUM_ATTRIBUTES_TEXT  = { 
-    MULTI_FIRST_NAME:'multi-first-name'
-}
-
-const ENUM_PLACEHOLDER = {
-    NACIONALIDADE: 'Nacionalidade', 
-    DOCUMENTO_CNPJ: 'Documento (CNPJ)',
-    DOCUMENTO_CPF: 'Documento (CPF)',
-    FUNCAO: 'Função',
-    NOME: 'Nome (NOME)',
-    NOME_EMPRESA: 'Nome (EMPRESA)',
-
-    CEP: 'CEP', 
-    ENDERECO: 'Endereço',
-    NUMERO: 'Número',
-    COMPLEMENTO: 'Complemento', 
-    BAIRRO: 'Bairro',
-    CIDADE: 'Cidade',
-    UF: 'Uf',
-    
 }
 
 const TAGS = {
@@ -95,10 +78,44 @@ const DESCRIPTIONS = {
     ESTAG: 'Estagiário',
     PJ: 'Pessoa Jurídica',
     NOME: 'Nome',
-    NOME_EMPRESA: 'Nome Empresa',
+    COMPANY_NAME: 'Nome Empresa',
     FIELD: ' O campo ',
-    NOT_NULL: ' Não pode ser nulo! '
+    NOT_NULL: ' Não pode ser nulo! ',
+    CEP_NOT_FOUND: 'CEP não encontrado.',
+    INVALID_CEP_FORMAT: "Formato de CEP inválido.",
+    CONTRACT_TYPE: 'Tipo de contrato', 
+    REQUERIMENT_TYPE: 'Tipo de requerimento'
 }
+
+const ACQUISITION_TERM = [
+    `TERMO DE AQUISIÇÃO DE EQUIPAMENTOS`, 
+    `Eu, NAME , residente no endereço ADDRESS, no bairro DISTRICT, localizado na cidade`,
+    'de CITY, no CEP ZIP_CODE, de nacionalidade NATIONALITY, exercendo a função de OCCUPATION'
+    `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.`,
+    `A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos`,
+    `especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de`,
+    `conservação, ficando ciente de que:`,
+    `1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou`,
+    `extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma`,
+    `marca ou equivalente ao da praça`,
+    `2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor`,
+    `competente;`,
+    `3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento`,
+    `completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata`,
+    `ao setor competente`,
+    `4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.`,
+    `Descrição do(s) material(is):`,   
+    'AQUISIÇÃO', 
+    'ITEMS',
+    'Atestamos que o bem foi entregue em DATA, nas seguintes condições:',
+    '(  ) Em perfeito estado',
+    '(  ) Apresentado marcas de uso',
+    '(  ) Apresentando defeito',
+    '(  ) Faltando peças ou acessórios',
+    'NOME RESPONSÁVEL',
+]
+
+
 
 function changeTitleContractDefault() {    
     document.querySelector(SELECTORS.CONTRACT_TYPE_CLT).textContent = DESCRIPTIONS.CLT
@@ -109,7 +126,7 @@ function changeTitleContractDefault() {
 
 function changeTitleContractBusiness() {        
     document.querySelector(SELECTORS.CONTRACT_TYPE_PJ).textContent = DESCRIPTIONS.PJ
-    document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.NOME_EMPRESA
+    document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.COMPANY_NAME
     document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.DISPLAY_BLOCK;
 }
 
@@ -131,8 +148,11 @@ const CreateField = {
         const div = document.getElementById(TAGS.items);
     
         const child_div = document.createElement(TAGS.DIV);
+        
+        let addInput = HANDLE_NEW_INPUT + CreateField.newField; 
+
         child_div.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_U_1_MD_1_3_MG_T_B_10);
-        child_div.setAttribute(ENUM_ATTRIBUTES.ID, `new-div-${CreateField.newField}`);
+        child_div.setAttribute(ENUM_ATTRIBUTES.ID, addInput);
     
         const input = document.createElement(TAGS.INPUT);
         input.setAttribute(ENUM_ATTRIBUTES.TYPE, ENUM_ATTRIBUTES.TYPE_TEXT);
@@ -145,21 +165,23 @@ const CreateField = {
         div.append(child_div);
         CreateField.newField += 1;
     },
+    
     removeInput(event) {
-        event.preventDefault();
-        CreateField.newField -= 1;  
+       event.preventDefault();
 
-       if(!document.querySelector('#new-div-'+CreateField.newField)) {
+       CreateField.newField -= 1;  
+       let removeInput = (SELECTORS.HANDLE_NEW_INPUT + CreateField.newField); 
+       
+       if(!document.querySelector(removeInput)) {
             swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
 
        if(CreateField.newField <= -2) {
         swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
-       document.querySelector(`#new-div-${CreateField.newField}`).remove();
+       document.querySelector(removeInput).remove();
     }
 }
-
 
 const Form = {
 
@@ -185,33 +207,33 @@ const Form = {
 
 
 
-    prepareDocument(contractType, requerimentType, documentArray, addressArray, items) {
+    prepareDocument(requerimentType, documentArray, addressArray, items) {
         
         if(requerimentType == ENUM_REQUERIMENT_TYPE.AQ) {
-            Form.generateAcquisitionDocument(documentArray, addressArray, items, requerimentType)
+            Form.
+generateDocument(documentArray, addressArray, items, requerimentType)
         } 
         
     },
 
 
     clearForm() {
-            document.getElementById('rua').value=("");
-            document.getElementById('bairro').value=("");
-            document.getElementById('cidade').value=("");
-            document.getElementById('uf').value=("");
-            document.getElementById('ibge').value=("");
+            document.getElementById(SELECTORS.RUA).value=("");
+            document.getElementById(SELECTORS.BAIRRO).value=("");
+            document.getElementById(SELECTORS.CIDADE).value=("");
+            document.getElementById(SELECTORS.UF).value=("");
      },
 
      callback(value) {
         if (!("erro" in value)) {
-            document.getElementById('rua').value=(value.logradouro);
-            document.getElementById('bairro').value=(value.bairro);
-            document.getElementById('cidade').value=(value.localidade);
-            document.getElementById('uf').value=(value.uf);
+            document.getElementById(SELECTORS.RUA).value=(value.logradouro);
+            document.getElementById(SELECTORS.BAIRRO).value=(value.bairro);
+            document.getElementById(SELECTORS.CIDADE).value=(value.localidade);
+            document.getElementById(SELECTORS.UF).value=(value.uf);
         } 
         else {
             Form.clearForm();
-            alert("CEP não encontrado.");
+            alert(DESCRIPTIONS.CEP_NOT_FOUND);
         }
      },
 
@@ -222,10 +244,10 @@ const Form = {
             var validacep = /^[0-9]{8}$/;
 
             if(validacep.test(cep)) {
-                document.getElementById('rua').value="...";
-                document.getElementById('bairro').value="...";
-                document.getElementById('cidade').value="...";
-                document.getElementById('uf').value="...";
+                document.getElementById(SELECTORS.RUA).value="...";
+                document.getElementById(SELECTORS.BAIRRO).value="...";
+                document.getElementById(SELECTORS.CIDADE).value="...";
+                document.getElementById(SELECTORS.UF).value="...";
   
                 var script = document.createElement('script');
 
@@ -236,17 +258,16 @@ const Form = {
             else {
 
                 clearForm();
-                throw new Error("Formato de CEP inválido.");
+                throw new Error(DESCRIPTIONS.INVALID_CEP_FORMAT);
             }
-        } //end if.
+        } 
         else {
-            //cep sem valor, limpa formulário.
-            clearForm();
+            Form.clearForm();
         }
      },
 
-     //============================== MONTAGEM DE DOCUMENTOS ================================//
-     generateAcquisitionDocument(documentArray, addressArray, items, requerimentType) {
+
+    generateDocument(documentArray, addressArray, items, requerimentType) {
       
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
@@ -320,14 +341,10 @@ const Form = {
         doc.save('Requerimento-aquisição-clt-estag.pdf')
      },
 
-     
-
-     
-    
     submit() {
-        const elementsFormDocument = document.querySelectorAll('#form-document input');
-        const elementsFormAdress = document.querySelectorAll('#form-address input');
-        const elementsFormItems = document.querySelectorAll('#form-items input');
+        const elementsFormDocument = document.querySelectorAll(SELECTORS.FORM_DOCUMENT_INPUT);
+        const elementsFormAdress = document.querySelectorAll(SELECTORS.FORM_ADDRESS_INPUT);
+        const elementsFormItems = document.querySelectorAll(SELECTORS.FORM_ITEMS_INPUT);
 
         try {
 
@@ -353,8 +370,8 @@ const Form = {
             const contractType = document.getElementById('tipo-contrato').value
             const requerimentType = document.getElementById('tipo-requerimento').value
 
-            Form.validateEmpty(contractType, 'Tipo de contrato')
-            Form.validateEmpty(requerimentType, 'Tipo de requerimento')
+            Form.validateEmpty(contractType, DESCRIPTIONS.CONTRACT_TYPE);
+            Form.validateEmpty(requerimentType, DESCRIPTIONS.REQUERIMENT_TYPE);
          
             Form.prepareDocument(contractType, requerimentType, documentArray, addressArray, items)
        
