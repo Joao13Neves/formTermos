@@ -87,6 +87,23 @@ const DESCRIPTIONS = {
     REQUERIMENT_TYPE: 'Tipo de requerimento'
 }
 
+
+
+const FONT_FAMILY = {
+    ARIAL_NARROW: 'Arial Narrow',
+    CALIBRE_CORPO: 'Calibri (Corpo)'
+}
+
+const FONT_SIZE = {
+    SIZE_11: '11',
+    SIZE_14: '14',
+}
+
+const FONT_STYLE = {
+   BOLD: 'bold',
+   NORMAL: 'normal'
+}
+
 const ACQUISITION_TERM = [
     `TERMO DE AQUISIÇÃO DE EQUIPAMENTOS`, 
     `Eu, NAME , residente no endereço ADDRESS, no bairro DISTRICT, localizado na cidade`,
@@ -114,8 +131,6 @@ const ACQUISITION_TERM = [
     '(  ) Faltando peças ou acessórios',
     'NOME RESPONSÁVEL',
 ]
-
-
 
 function changeTitleContractDefault() {    
     document.querySelector(SELECTORS.CONTRACT_TYPE_CLT).textContent = DESCRIPTIONS.CLT
@@ -195,7 +210,7 @@ const Form = {
         return string.charAt(0).toUpperCase() + string.slice(1);
     },
 
-    dataAtualFormatada(){
+    getDate(){
         var data = new Date(),
             dia  = data.getDate().toString(),
             diaF = (dia.length == 1) ? '0'+dia : dia,
@@ -328,7 +343,7 @@ generateDocument(documentArray, addressArray, items, requerimentType)
   
 
         doc.text(35, 175,textItems).setFontSize(11).setFont('Arial Narrow', 'normal');        
-        doc.text(20, 200, 'Atestamos que o bem foi entregue em ' + Form.dataAtualFormatada() + ', \nnas seguintes condições:');
+        doc.text(20, 200, 'Atestamos que o bem foi entregue em ' + Form.getDate() + ', \nnas seguintes condições:');
         doc.text(20, 215, '(  ) Em perfeito estado\n');
         doc.text(20, 220, '(  ) Apresentado marcas de uso\n');
         doc.text(20, 225, '(  ) Apresentando defeito\n');
