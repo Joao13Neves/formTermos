@@ -349,8 +349,8 @@ const Form = {
         if(requerimentType == ENUM_REQUERIMENT_TYPE.AQ) {
 
             ACQUISITION_TERM.forEach(text => {
-                document += replaceDocumentText(text, collaborator);
-                document += replaceAddressText(text, address);
+                document += Form.replaceDocumentText(text, collaborator);
+                document += Form.replaceAddressText(text, address);
                 document += text;
             });
         }
@@ -367,16 +367,15 @@ const Form = {
     
     generateDocument(contractType, requerimentType, collaborator, address, itemsArray) {
       
-
         if(contractType == ENUM_CONTRACT_TYPE.CLT || contractType == ENUM_CONTRACT_TYPE.ESTAG) {
 
-            getDocument(requerimentType, collaborator, address, itemsArray)
+            Form.getDocument(requerimentType, collaborator, address, itemsArray)
 
         }
 
         if(contractType == ENUM_CONTRACT_TYPE.PJ) {
 
-            getDocument(requerimentType, collaborator, address, itemsArray)
+            Form.getDocument(requerimentType, collaborator, address, itemsArray)
 
         }
 
@@ -453,22 +452,25 @@ const Form = {
 
         try {
             const  collaborator = {
-                name: document.querySelector(SELECTORS.NAME),
-                cpf: document.querySelector(SELECTORS.CPF),
-                cnpj: document.querySelector(SELECTORS.CNPJ),
-                occupation: document.querySelector(SELECTORS.OCUPATION),
-                nationality: document.querySelector(SELECTORS.NATIONALITY)
+                name: document.getElementById(SELECTORS.NAME).value,
+                cpf: document.getElementById(SELECTORS.CPF).value,
+                cnpj: document.getElementById(SELECTORS.CNPJ).value,
+                occupation: document.getElementById(SELECTORS.OCUPATION).value,
+                nationality: document.getElementById(SELECTORS.NATIONALITY).value
             }
     
             const address = {
-                zipcode: document.querySelector(SELECTORS.ZIPCODE),
-                number: document.querySelector(SELECTORS.NUMBER),
-                street: document.querySelector(SELECTORS.STREET), 
-                district: document.querySelector(SELECTORS.DISTRICT), 
-                city: document.querySelector(SELECTORS.CITY),
-                uf: document.querySelector(SELECTORS.UF),
+                zipcode: document.getElementById(SELECTORS.ZIPCODE).value,
+                number: document.getElementById(SELECTORS.NUMBER).value,
+                street: document.getElementById(SELECTORS.STREET).value, 
+                district: document.getElementById(SELECTORS.DISTRICT).value, 
+                city: document.getElementById(SELECTORS.CITY).value,
+                uf: document.getElementById(SELECTORS.UF).value,
             }
 
+            console.log(collaborator)
+            console.log(address)
+            
             validateEmpty(collaborator.name, DESCRIPTIONS.NAME);
             validateEmpty(collaborator.cpf, DESCRIPTIONS.CPF);
             
