@@ -10,6 +10,8 @@ const ENUM_CONTRACT_TYPE = {
     ESTAG: 'ESTAG'
 }
 
+const PDF_NAME = 'Requerimento-aquisição-clt-estag.pdf';
+
 const ENUM_STYLES = {
     DISPLAY_NONE: 'none',
     DISPLAY_BLOCK: 'block',
@@ -299,33 +301,32 @@ const Form = {
      },
 
 
-    replaceDocumentText(text, documentArray) {
+    replaceTextCollaborator(text, collaborator) {
         switch(text) {
             case 'NAME':
-                return text.replace(/NAME/gi, capitalizeFirstLetter(documentArray[0]));
+                return text.replace(/NAME/gi, capitalizeFirstLetter(collaborator.name));
 
             case 'NATIONALITY':
-                return text.replace(/NATIONALITY/gi, value);
+                return text.replace(/NATIONALITY/gi, collaborator.nationality);
            
             default: 
                 return "";
         }
     },
 
-    replaceAdressText(text, addressArray) {
+    replaceAddressText(text, address) {
         switch(text) {
             case 'ADDRESS':
-                return text.replace(/ADDRESS/gi, addressArray[1] + " " + addressArray[2]);
+                return text.replace(/ADDRESS/gi, address.street + " " + address.number);
       
             case 'DISTRICT':
-                return text.replace(/DISTRICT/gi, addressArray[4]);
+                return text.replace(/DISTRICT/gi, address.district);
            
-
             case 'CITY':
-                return text.replace(/CITY/gi, addressArray[5]);
+                return text.replace(/CITY/gi, address.city);
            
             case 'ZIP_CODE':
-                return text.replace(/ZIP_CODE/gi, addressArray[0]);
+                return text.replace(/ZIP_CODE/gi, address.zipcode);
            
             default: 
                 return "";
@@ -333,19 +334,19 @@ const Form = {
         }
     },
 
-    getDocument(requerimentType, documentArray, addressArray, itemsArray) {
+    getDocument(requerimentType, collaborator, address, itemsArray) {
 
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
         const center  = (width / 2);
 
+        let document = "";
         if(requerimentType == ENUM_REQUERIMENT_TYPE.AQ) {
 
             ACQUISITION_TERM.forEach(text => {
-
-                let text = replaceDocumentText(text, documentArray);
-                let text = replaceAddressText(text, addressArray);
-
+                document += replaceDocumentText(text, collaborator);
+                document += replaceAddressText(text, address);
+                document += text;
             });
         }
 
@@ -359,21 +360,22 @@ const Form = {
 
     },
     
-    generateDocument(contractType, requerimentType, documentArray, addressArray, itemsArray) {
+    generateDocument(contractType, requerimentType, collaborator, address, itemsArray) {
       
 
         if(contractType == ENUM_CONTRACT_TYPE.CLT || contractType == ENUM_CONTRACT_TYPE.CLT) {
 
-            getDocument(requerimentType, documentArray, addressArray, itemsArray)
+            getDocument(requerimentType, collaborator, address, itemsArray)
 
         }
 
         if(contractType == ENUM_CONTRACT_TYPE.PJ) {
 
-            getDocument(requerimentType, documentArray, addressArray, itemsArray)
+            getDocument(requerimentType, collaborator, address, itemsArray)
 
         }
 
+        /*
         const documentTitle = 'TERMO DE AQUISIÇÃO DE EQUIPAMENTOS'; 
         
         doc.setFontSize(14)
@@ -438,29 +440,29 @@ const Form = {
         
         doc.text(20,235,"").setFontSize(14).setFont('Calibri (Corpo)', 'bold');
         doc.text('NOME RESPONSÁVEL', center, 255, { align: 'center' })
-        doc.save('Requerimento-aquisição-clt-estag.pdf')
-     },
+        doc.save('PDF_NAME')
+        */
+    },
 
     submit() {
 
-        const  collaborator = {
-            name: document.querySelector(SELECTORS.NAME),
-            cpf: document.querySelector(SELECTORS.CPF),
-            cnpj: document.querySelector(SELECTORS.CNPJ),
-            occupation: document.querySelector(SELECTORS.OCUPATION),
-            nationality: document.querySelector(SELECTORS.NATIONALITY)
-        }
-
-        const adress = {
-            zipcode: document.querySelector(SELECTORS.ZIPCODE),
-            street: document.querySelector(SELECTORS.STREET), 
-            district: document.querySelector(SELECTORS.DISTRICT), 
-            city: document.querySelector(SELECTORS.CITY),
-            uf: document.querySelector(SELECTORS.UF),
-        }
-
-
         try {
+            const  collaborator = {
+                name: document.querySelector(SELECTORS.NAME),
+                cpf: document.querySelector(SELECTORS.CPF),
+                cnpj: document.querySelector(SELECTORS.CNPJ),
+                occupation: document.querySelector(SELECTORS.OCUPATION),
+                nationality: document.querySelector(SELECTORS.NATIONALITY)
+            }
+    
+            const address = {
+                zipcode: document.querySelector(SELECTORS.ZIPCODE),
+                number: document.querySelector(SELECTORS.NUMBER),
+                street: document.querySelector(SELECTORS.STREET), 
+                district: document.querySelector(SELECTORS.DISTRICT), 
+                city: document.querySelector(SELECTORS.CITY),
+                uf: document.querySelector(SELECTORS.UF),
+            }
 
             validateEmpty(collaborator.name, DESCRIPTIONS.NAME);
             validateEmpty(collaborator.cpf, DESCRIPTIONS.CPF);
@@ -472,11 +474,12 @@ const Form = {
             validateEmpty(collaborator.occupation, DESCRIPTIONS.OCCUPATION);
             validateEmpty(collaborator.nationality, DESCRIPTIONS.NATIONALITY);
 
-            validateEmpty(adress.zipcode, DESCRIPTIONS.ZIPCODE);
-            validateEmpty(adress.street, DESCRIPTIONS.STREET);
-            validateEmpty(adress.city, DESCRIPTIONS.CITY);
-            validateEmpty(adress.district, DESCRIPTIONS.DISTRICT);
-            validateEmpty(adress.uf, DESCRIPTIONS.UF);
+            validateEmpty(address.zipcode, DESCRIPTIONS.ZIPCODE);
+            validateEmpty(address.number, DESCRIPTIONS.NUMBER);
+            validateEmpty(address.street, DESCRIPTIONS.STREET);
+            validateEmpty(address.city, DESCRIPTIONS.CITY);
+            validateEmpty(address.district, DESCRIPTIONS.DISTRICT);
+            validateEmpty(address.uf, DESCRIPTIONS.UF);
 
             const elementsFormItems = document.querySelectorAll(SELECTORS.FORM_ITEMS_INPUT);
             const itemsArray = [];
@@ -492,7 +495,7 @@ const Form = {
             validateEmpty(contractType, DESCRIPTIONS.CONTRACT_TYPE);
             validateEmpty(requerimentType, DESCRIPTIONS.REQUERIMENT_TYPE);
          
-            Form.generateDocument(contractType, requerimentType, documentArray, addressArray, itemsArray)
+            Form.generateDocument(contractType, requerimentType, collaborator, address, itemsArray)
           
        
         } catch(error) {
