@@ -230,16 +230,8 @@ const CreateField = {
        CreateField.newField -= 1;  
        let removeInput = (SELECTORS.HANDLE_NEW_INPUT + CreateField.newField); 
    
-       if(!document.getElementById(removeInput)) {
-            swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
-       }
-
-       if(CreateField.newField <= 0) {
-        swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
-       }
-
-       console.log(removeInput)
-       document.getElementById(removeInput).remove();
+        let element = document.getElementById(removeInput);
+        element.remove();
     }
 }
 
