@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: whitesmoke;
+    background-color: #2b8ae3;
 }
 
 textarea:focus, input:focus{
@@ -10,7 +10,7 @@ textarea:focus, input:focus{
 }
 
 .main-wrapper {
-    background-color: whitesmoke;
+    background-color: #2b8ae3;
     max-width: 50rem;
     margin: 20px auto;
     padding: 0 2rem;
@@ -22,13 +22,18 @@ textarea:focus, input:focus{
  h1 {
     text-align: center;
     margin: 1rem 0;
-    color: #00008B;
+    color: whitesmoke;
 }
 
 h3{
     text-align: center;
-    margin: 2rem 0;
-    color: #00008B;
+    margin: 1rem 0;
+    color: whitesmoke;
+}
+
+
+input {
+    background-color: whitesmoke;
 }
 
 #name {
@@ -36,7 +41,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f55d16;
+    box-shadow: 4px 4px  0px #f55d16;
 }
 
 #ocupacao {
@@ -44,7 +49,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f55d16;
+    box-shadow: 4px 4px  0px #f55d16;
 }
 
 #cpf {
@@ -52,7 +57,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f55d16;
+    box-shadow: 4px 4px  0px #f55d16;
 }
 
 #cnpj {
@@ -60,7 +65,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f55d16;
+    box-shadow: 4px 4px  0px #f55d16;
 }
 
 #nacionalidade {
@@ -68,7 +73,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f55d16;
+    box-shadow: 4px 4px  0px #f55d16;
 }
 
 #cep {
@@ -76,7 +81,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 #rua {
@@ -84,7 +89,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 #numero {
@@ -92,7 +97,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 #complemento {
@@ -100,7 +105,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 #bairro {
@@ -108,7 +113,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 #cidade {
@@ -116,7 +121,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 #uf {
@@ -124,7 +129,7 @@ h3{
     padding: 10px;
     width: 750px;
     border-radius: 10px;
-    box-shadow: 3px 3px  0px #f77c3e;
+    box-shadow: 4px 4px  0px #f77c3e;
 }
 
 .contract-type {
@@ -157,7 +162,6 @@ h3{
 }
 
 
-/* form row */
 .form-row {
     display: flex;
     flex-direction: column;
@@ -233,6 +237,16 @@ h3{
     justify-content: flex-end;
     flex-wrap: wrap;
 }
+
+.pure-button {
+    color: white;
+    background-color: #4CAF50;
+}
+
+.fa, .fa-plus {
+    background-color: transparent;
+}
+
 .btn-process {
     background-color: #4CAF50; 
     color: #fff; 
