@@ -1,3 +1,5 @@
+const PDF_NAME = 'Requerimento-aquisição-clt-estag.pdf';
+
 const ENUM_REQUERIMENT_TYPE = {
     AQ: 'AQ',
     CHG: 'CHG',
@@ -10,8 +12,6 @@ const ENUM_CONTRACT_TYPE = {
     ESTAG: 'ESTAG'
 }
 
-const PDF_NAME = 'Requerimento-aquisição-clt-estag.pdf';
-
 const ENUM_STYLES = {
     DISPLAY_NONE: 'none',
     DISPLAY_BLOCK: 'block',
@@ -21,7 +21,7 @@ const ENUM_STYLES = {
     PURE_G: 'pure-g',
     PURE_U_1_MD_1_3: 'pure-u-1 pure-u-md-1-3',
     CONTRACT_NAME: 'contract-name',
-    PURE_INPUT_1_2: 'pure-input-1-2',
+    PURE_INPUT_1_2: 'pure-input-1',
     FORM_ADDRESS: 'form-address',
     CONTRACT_TYPE: 'contract-type',
     PURE_FORM: 'pure-form',
