@@ -39,6 +39,12 @@ input {
     margin-top: 5px;
 }
 
+legend {
+    text-align: center;
+    font-size: 1.6rem;
+    color: whitesmoke;
+}
+
 textarea:focus, input:focus{
     outline: none;
 }
