@@ -194,7 +194,6 @@ function showCnpjField() {
 }
 showCnpjField(); 
 
-
 const CreateField = {
     newField: 0,
     
@@ -217,6 +216,14 @@ const CreateField = {
         input.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_INPUT_1_2);
         input.setAttribute(ENUM_ATTRIBUTES.VALUE, DESCRIPTIONS.ITEMS);
        
+        const removeBtn = document.createElement('button');
+        removeBtn.setAttribute(ENUM_ATTRIBUTES.CLASS, 'btnRemove');
+
+        const icon = document.createElement('i');
+        icon.setAttribute(ENUM_ATTRIBUTES.CLASS, 'fa fa-minus')
+
+        removeBtn.appendChild(icon);
+        child_div.append(removeBtn);
         child_div.appendChild(input);
     
         div.append(child_div);
