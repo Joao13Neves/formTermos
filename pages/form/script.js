@@ -170,7 +170,7 @@ function changeTitleContractDefault() {
     document.querySelector(SELECTORS.CONTRACT_TYPE_CLT).textContent = DESCRIPTIONS.CLT
     document.querySelector(SELECTORS.CONTRACT_TYPE_ESTAG).textContent = DESCRIPTIONS.ESTAG
     document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.NOME    
-    document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.NONE;
+    document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.DISPLAY_NONE;
 }
 
 function changeTitleContractBusiness() {        
