@@ -195,10 +195,24 @@ h3{
 .add-row {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
+.addButon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
 
+.fa, .fa-plus {
+    background: transparent;
+}
+.row {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin-top: 10px;
+}
 .options {
     border: 0.5px;
     border-radius: 5px;
@@ -230,3 +244,4 @@ h3{
     color: #fff;
     background: rgb(202, 60, 60);
 }
+

@@ -28,7 +28,7 @@
                     <label class="contract-type-clt" class="form-control">CLT</label>
                     <input 
                         type="radio" 
-                        checked="true" 
+                        checked
                         onclick="changeTitleContractDefault()" 
                         id="tipo-contrato" 
                         name="option" 
@@ -221,18 +221,10 @@
                         <legend>Itens</legend>
                         <div class="add-row">
                             <button 
-                                class="pure-button pure-button-primary"
+                                class="button-large pure-button pure-primary addButon"
                                 onclick="CreateField.createInput(event)" 
-                                class="addBtn"
                                 ><i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
-                            <button 
-                                class="pure-button pure-button-error"
-                                class="removeBtn"
-                                onclick="CreateField.removeInput(event)" 
-                                ><i class="fa fa-times" aria-hidden="true"></i>
-                            </button>
-                         
                         </div>
                     </div>
             </form>

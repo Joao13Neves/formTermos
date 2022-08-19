@@ -21,14 +21,15 @@ const ENUM_STYLES = {
     PURE_G: 'pure-g',
     PURE_U_1_MD_1_3: 'pure-u-1 pure-u-md-1-3',
     CONTRACT_NAME: 'contract-name',
-    PURE_INPUT_1: 'pure-input-1',
+    PURE_INPUT_1_2: 'pure-input-1-2',
     FORM_ADDRESS: 'form-address',
     CONTRACT_TYPE: 'contract-type',
     PURE_FORM: 'pure-form',
     FORM_ITEMS: 'form-items',
     ITEMS_WRAPPER: 'items-wrapper',
     ADD_ROW: 'add-row',
-    PURE_U_1_MD_1_3_MG_T_B_10: 'pure-u-1 pure-u-md-1-3 mg-t-b-10'
+    PURE_U_1_MD_1_3_MG_T_B_10: 'pure-u-md-1-5 mg-t-b-10',
+    ROW: 'row'
 }
 
 const SELECTORS = {
@@ -89,7 +90,7 @@ const DESCRIPTIONS = {
     PERSONAL_DATA: 'Dados Pessoais',
     COMPANY_DATA : 'Dados da Empresa',
     PATRIMONY: 'Patrimônio',
-    ITEMS: '-INFORME: Nome/número do equipamento',
+    ITEMS: 'Informar modelo/patrimônio',
     NO_FIELD_REMOVE: 'Não existe field para remover',
     WARNING: 'Atenção!',
     CLT: 'CLT',
@@ -208,16 +209,14 @@ const CreateField = {
         
         let addInput = SELECTORS.HANDLE_NEW_INPUT + CreateField.newField; 
     
-        child_div.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_U_1_MD_1_3_MG_T_B_10);
+        child_div.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.ROW);
         child_div.setAttribute(ENUM_ATTRIBUTES.ID, addInput);
-        console.log(child_div)
-    
+       
         const input = document.createElement(TAGS.INPUT);
         input.setAttribute(ENUM_ATTRIBUTES.TYPE, ENUM_ATTRIBUTES.TYPE_TEXT);
-        input.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_INPUT_1);
+        input.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_INPUT_1_2);
         input.setAttribute(ENUM_ATTRIBUTES.VALUE, DESCRIPTIONS.ITEMS);
-        
-        child_div.appendChild(labelElement);
+       
         child_div.appendChild(input);
     
         div.append(child_div);
