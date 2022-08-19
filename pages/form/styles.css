@@ -13,12 +13,19 @@ h1 {
     text-align: center;
     margin: 1rem 0;
     color: whitesmoke;
+    font-family: 'Roboto';
+}
+
+span {
+    color: whitesmoke;
+    font-family: 'Roboto';
 }
 
 h3{
     text-align: center;
     margin: 1rem 0;
     color: whitesmoke;
+    font-family: 'Roboto';
 }
 
 label {
@@ -156,7 +163,6 @@ textarea:focus, input:focus{
 }
 
 .contract-type {
-   
     padding: 1rem 5rem;
     display: flex;
     flex-direction: row;

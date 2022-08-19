@@ -73,7 +73,8 @@ const ENUM_ATTRIBUTES = {
     TYPE_NUMBER: 'number',
     TYPE_EMAIL: 'email',
     FOR: 'for',
-    PLACEHOLDER: 'placeholder'
+    PLACEHOLDER: 'placeholder',
+    ONCLICK: 'onclick'
 }
 
 const TAGS = {
@@ -183,10 +184,22 @@ function capitalizeFirstLetter(string) {
 }
 
 function validateEmpty(value, name) {
-    if(!value.trim()) {
+
+
+    if(!value || !value.trim()) {
         throw new Error(DESCRIPTIONS.FIELD + name + DESCRIPTIONS.NOT_NULL);
     }
 }
+
+function removeInput(event) {
+    event.preventDefault(); 
+
+    CreateField.newField -= 1;  
+    let removeInput = (SELECTORS.HANDLE_NEW_INPUT + CreateField.newField); 
+
+     let element = document.getElementById(removeInput);
+     element.remove();
+ }
 
 function showCnpjField() {
     document.querySelector(SELECTORS.IS_CNPJ)
@@ -218,6 +231,7 @@ const CreateField = {
        
         const removeBtn = document.createElement('button');
         removeBtn.setAttribute(ENUM_ATTRIBUTES.CLASS, 'btnRemove');
+        removeBtn.setAttribute(ENUM_ATTRIBUTES.ONCLICK, 'removeInput(event)');
 
         const icon = document.createElement('i');
         icon.setAttribute(ENUM_ATTRIBUTES.CLASS, 'fa fa-minus')
@@ -229,16 +243,6 @@ const CreateField = {
         div.append(child_div);
         CreateField.newField++;
     },
-    
-    removeInput(event) {
-       event.preventDefault();
-
-       CreateField.newField -= 1;  
-       let removeInput = (SELECTORS.HANDLE_NEW_INPUT + CreateField.newField); 
-   
-        let element = document.getElementById(removeInput);
-        element.remove();
-    }
 }
 
 const Form = {
