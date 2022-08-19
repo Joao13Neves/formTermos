@@ -200,7 +200,7 @@ const CreateField = {
     createInput(event) {     
         event.preventDefault();
         const labelElement = document.createElement(TAGS.LABEL);
-        labelElement.innerHTML = TAGS.PATRIMONY;
+        labelElement.innerHTML = DESCRIPTIONS.PATRIMONY;
 
         const div = document.getElementById(TAGS.ITEMS);
     
@@ -210,10 +210,11 @@ const CreateField = {
     
         child_div.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_U_1_MD_1_3_MG_T_B_10);
         child_div.setAttribute(ENUM_ATTRIBUTES.ID, addInput);
+        console.log(child_div)
     
         const input = document.createElement(TAGS.INPUT);
         input.setAttribute(ENUM_ATTRIBUTES.TYPE, ENUM_ATTRIBUTES.TYPE_TEXT);
-        input.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_ATTRIBUTES.PURE_INPUT_1);
+        input.setAttribute(ENUM_ATTRIBUTES.CLASS, ENUM_STYLES.PURE_INPUT_1);
         input.setAttribute(ENUM_ATTRIBUTES.VALUE, DESCRIPTIONS.ITEMS);
         
         child_div.appendChild(labelElement);
@@ -228,15 +229,17 @@ const CreateField = {
 
        CreateField.newField -= 1;  
        let removeInput = (SELECTORS.HANDLE_NEW_INPUT + CreateField.newField); 
-      console.log(removeInput)
-       if(!document.querySelector(removeInput)) {
+   
+       if(!document.getElementById(removeInput)) {
             swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
 
-       if(CreateField.newField <= -2) {
+       if(CreateField.newField <= 0) {
         swal(DESCRIPTIONS.WARNING, DESCRIPTIONS.NO_FIELD_REMOVE); return false;
        }
-       document.querySelector(removeInput).remove();
+
+       console.log(removeInput)
+       document.getElementById(removeInput).remove();
     }
 }
 
