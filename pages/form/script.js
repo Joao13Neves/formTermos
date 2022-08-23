@@ -1,15 +1,25 @@
-const PDF_NAME = 'Requerimento-aquisição-clt-estag.pdf';
+const ENUM_PDF_NAME = {
+    REQ_CLT: 'Requerimento Clt.pdf',
+    REQ_PJ:  'Requerimento Pessoa Jurídica.pdf',
+    REQ_ESTAG: 'Requerimento Estagio.pdf',
+    DEV_CLT: 'Devolução Clt.pdf',
+    DEV_PJ:  'Devolução Pessoa Jurídica.pdf',
+    DEV_ESTAG: 'Devolução Estagio.pdf',
+    CHG_CLT: 'Troca Clt.pdf',
+    CHG_PJ:  'Troca Pessoa Jurídica.pdf',
+    CHG_ESTAG: 'Troca Estagio.pdf',
+} ;
 
 const ENUM_REQUERIMENT_TYPE = {
-    AQ: 'AQ',
-    CHG: 'CHG',
-    DEV: 'DEV'
+    AQ: 'Aquisição',
+    CHG: 'Devolução',
+    DEV: 'Troca'
 }
 
 const ENUM_CONTRACT_TYPE = {
-    CLT: 'CLT',
-    PJ: 'PJ',
-    ESTAG: 'ESTAG'
+    CLT: 'Clt',
+    PJ: 'Pessoa Jurídica',
+    ESTAG: 'Estagiário'
 }
 
 const ENUM_STYLES = {
@@ -123,9 +133,22 @@ const DESCRIPTIONS = {
     UF: 'Uf'
 }
 
+
+/// PDF CONFIG
 const FONT_FAMILY = {
-    ARIAL_NARROW: 'Arial Narrow',
-    CALIBRE_CORPO: 'Calibri (Corpo)'
+    COURIER: 'Courier',
+    COURIER_BOLD:'Courier-Bold',
+    COURIER_BOLDOBLIQUE:'Courier-BoldOblique',
+    COURIER_OBLIQUE:'Courier-Oblique',
+    HELVETICA: 'Helvetica',
+    HELVETICA_BOLD: 'Helvetica-Bold',
+    HELVETICA_BOLD_OBLIQUE: 'Helvetica-BoldOblique',
+    HELVETICA_OBLIQUE: 'Helvetica-Oblique',
+    SYMBOL: 'Symbol',
+    TIMES_ROMAN: 'Times-Roman',
+    TIMES_BOLD: 'Times-Bold',
+    TIMES_ITALIC: 'Time-Italic',
+    TIMES_BOLD_ITALIC: 'Time-BoldItalic'
 }
 
 const FONT_SIZE = {
@@ -133,38 +156,68 @@ const FONT_SIZE = {
     SIZE_14: '14',
 }
 
+const DOCUMENT_CONFIG = {
+    align_center: 'center',
+    align_left: 'left',
+    align_rigth: 'rigth',
+
+}
+
 const FONT_STYLE = {
    BOLD: 'bold',
    NORMAL: 'normal'
 }
 
-const ACQUISITION_TERM = [
-    `TERMO DE AQUISIÇÃO DE EQUIPAMENTOS`, 
-    `Eu, NAME , residente no endereço ADDRESS, no bairro DISTRICT, localizado na cidade`,
-    'de CITY, no CEP ZIP_CODE, de nacionalidade NATIONALITY, exercendo a função de OCCUPATION',
-    `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.`,
-    `A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos`,
-    `especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de`,
-    `conservação, ficando ciente de que:`,
-    `1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou`,
-    `extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma`,
-    `marca ou equivalente ao da praça`,
-    `2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor`,
-    `competente;`,
-    `3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento`,
-    `completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata`,
-    `ao setor competente`,
-    `4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.`,
-    `Descrição do(s) material(is):`,   
-    'AQUISIÇÃO', 
-    'ITEMS',
-    'Atestamos que o bem foi entregue em DATA, nas seguintes condições:',
-    '(  ) Em perfeito estado',
-    '(  ) Apresentado marcas de uso',
-    '(  ) Apresentando defeito',
-    '(  ) Faltando peças ou acessórios',
-    'NOME RESPONSÁVEL',
-]
+
+const DOCUMENT_TOP_DESCRIPTION = {
+    LINE_AQUISITION_EQUIPAMENT: `TERMO DE AQUISIÇÃO DE EQUIPAMENTOS`, 
+    LINE_CHANGE_EQUIPAMENTE: `TERMO DE TROCA DE EQUIPAMENTOS`, 
+    LINE_DEVOLUTION_EQUIPAMENT: `TERMO DE DEVOLUÇÃO DE EQUIPAMENTOS`, 
+}
+
+const DOCUMENT_BASEBOARD = {
+    LINE_1: 'Atestamos que o bem foi entregue em DATA, nas seguintes condições:',
+    LINE_2:'(  ) Em perfeito estado',
+    LINE_3:'(  ) Apresentado marcas de uso',
+    LINE_4:'(  ) Apresentando defeito',
+    LINE_5:'(  ) Faltando peças ou acessórios',
+    LINE_6:'NOME RESPONSÁVEL'
+}
+
+const ACQUISITION_TERM = {
+    LINE_1: `Eu, NAME , residente no endereço ADDRESS, no bairro DISTRICT, localizado na cidade`,
+    LINE_2: 'de CITY, no CEP ZIP_CODE, de nacionalidade NATIONALITY, exercendo a função de OCCUPATION',
+    LINE_3: `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.`,
+    LINE_4: `A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos`,
+    LINE_5: `especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de`,
+    LINE_6: `conservação, ficando ciente de que:`,
+
+    LINE_7: `1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou`,
+    LINE_8: `extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma`,
+    LINE_9: `marca ou equivalente ao da praça`,
+    
+    LINE_10: `2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor`,
+    LINE_11: `competente;`,
+    
+    LINE_12:`3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento`,
+    LINE_13:`completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata`,
+    LINE_14:`ao setor competente`,
+    
+    LINE_15:`4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.`,
+    LINE_16:`Descrição do(s) material(is):`,   
+    
+    LINE_17 :'ITEMS',
+}
+
+const CHANGE_TERM = {
+
+}
+
+const DEVOLUTION_TERM = {
+    
+}
+
+
 
 function changeTitleContractDefault() {    
     document.querySelector(SELECTORS.CONTRACT_TYPE_CLT).textContent = DESCRIPTIONS.CLT
@@ -306,146 +359,144 @@ const Form = {
         }
      },
 
-    replaceTextCollaborator(text, collaborator) {
-        switch(text) {
-            case 'NAME':
-                return text.replace(/NAME/gi, capitalizeFirstLetter(collaborator.name));
 
-            case 'NATIONALITY':
-                return text.replace(/NATIONALITY/gi, collaborator.nationality);
-           
-            default: 
-                return "";
-        }
-    },
-
-    replaceAddressText(text, address) {
-        switch(text) {
-            case 'ADDRESS':
-                return text.replace(/ADDRESS/gi, address.street + " " + address.number);
-      
-            case 'DISTRICT':
-                return text.replace(/DISTRICT/gi, address.district);
-           
-            case 'CITY':
-                return text.replace(/CITY/gi, address.city);
-           
-            case 'ZIP_CODE':
-                return text.replace(/ZIP_CODE/gi, address.zipcode);
-           
-            default: 
-                return "";
-
-        }
-    },
-
-    getDocument(requerimentType, collaborator, address, itemsArray) {
-
+    makeDocument(contractType, requerimentType, collaborator, address, itemsArray, pdfName, documentTitle) {
+        
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
         const center  = (width / 2);
 
-        let document = "";
-        if(requerimentType == ENUM_REQUERIMENT_TYPE.AQ) {
-
-            ACQUISITION_TERM.forEach(text => {
-                document += Form.replaceDocumentText(text, collaborator);
-                document += Form.replaceAddressText(text, address);
-                document += text;
-            });
-        }
-
-        if(requerimentType == ENUM_REQUERIMENT_TYPE.CHG) {
-           
-        }
-
-        if(requerimentType == ENUM_REQUERIMENT_TYPE.DEV) {
-           
-        }
-
+        doc.setFontSize(FONT_SIZE.SIZE_14);
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD)
+        
+        doc.text(documentTitle, center,30); 
     },
+
     
     generateDocument(contractType, requerimentType, collaborator, address, itemsArray) {
       
-        if(contractType == ENUM_CONTRACT_TYPE.CLT || contractType == ENUM_CONTRACT_TYPE.ESTAG) {
+        if(contractType == ENUM_CONTRACT_TYPE.CLT) {
 
-            Form.getDocument(requerimentType, collaborator, address, itemsArray)
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.REQ_CLT, 
+                    DOCUMENT_TOP_DESCRIPTION.LINE_AQUISITION_EQUIPAMENT
+                );
+            }
+
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.CHG) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.CHG_CLT,
+                    DOCUMENT_TOP_DESCRIPTION.LINE_CHANGE_EQUIPAMENTE
+                );
+            }
+
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.DEV) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.DEV_CLT,
+                    DOCUMENT_TOP_DESCRIPTION.LINE_DEVOLUTION_EQUIPAMENT
+                );
+            }
 
         }
 
         if(contractType == ENUM_CONTRACT_TYPE.PJ) {
 
-            Form.getDocument(requerimentType, collaborator, address, itemsArray)
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.REQ_PJ,
+                    DOCUMENT_TOP_DESCRIPTION.LINE_AQUISITION_EQUIPAMENT
+                );
+            }
+
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.CHG) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.CHG_PJ,
+                    DOCUMENT_TOP_DESCRIPTION.LINE_CHANGE_EQUIPAMENTE
+                );
+            }
+
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.DEV) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.DEV_PJ, 
+                    DOCUMENT_TOP_DESCRIPTION.LINE_DEVOLUTION_EQUIPAMENT
+                );
+            }
 
         }
 
-        /*
-        const documentTitle = 'TERMO DE AQUISIÇÃO DE EQUIPAMENTOS'; 
-        
-        doc.setFontSize(14)
-        doc.setFont('Calibri (Corpo)', 'bold')
-        doc.text(documentTitle, center,30, { align: 'center' })
-        
-        //========================= primeiro paragrafo =========================//
-        const nameCapitalize = capitalizeFirstLetter(documentArray[0])
+        if(contractType == ENUM_CONTRACT_TYPE.ESTAG) {
 
-        doc.setFontSize(11);
-        doc.setFont('Arial Narrow', 'normal');
-        doc.text("",20,45)
-       
-        doc.text(30,50,'Eu, ' + nameCapitalize + ' , residente no endereço ' + addressArray[0].trim() + ', no bairro ' + addressArray[4].trim() + ', localizado na cidade\n',);
-        doc.text(20,55, 'de '+addressArray[5].trim() +', no CEP '+addressArray[1].trim()+', de nacionalidade '+  documentArray[4].trim() +', exercendo a função de '+  documentArray[1].trim() +',\n')
-        
-        if(requerimentType == "PJ") {
-            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[2].trim() + ', declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
-        } else if(requerimentType == "CLT" || requerimentType == "ESTAG") {
-            doc.text(20,60, 'inscrito no CPF sob o n° ' + documentArray[2].trim() + ', e possuinte do N° '+  documentArray[3].trim() +' INFORMAR, declaro e confirmo a aquisição dos materiais de trabalho cedido pela\n')
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.REQ_ESTAG,
+                    DOCUMENT_TOP_DESCRIPTION.LINE_AQUISITION_EQUIPAMENT
+                );
+            }
+
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.CHG) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.CHG_ESTAG, 
+                    DOCUMENT_TOP_DESCRIPTION.LINE_CHANGE_EQUIPAMENTE
+                );
+            }
+
+            if(requerimentType === ENUM_REQUERIMENT_TYPE.DEV) {
+                Form.makeDocument(
+                    contractType, 
+                    requerimentType, 
+                    collaborator, 
+                    address, 
+                    itemsArray, 
+                    ENUM_PDF_NAME.DEV_ESTAG, 
+                    DOCUMENT_TOP_DESCRIPTION.LINE_DEVOLUTION_EQUIPAMENT
+                );
+            }
+
         }
-       
-        doc.text(20,65, `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.\n`)
-        doc.text(30,75, 'A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos\n')
-        doc.text(20,80, 'especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de\n')
-        doc.text(20,85, 'conservação, ficando ciente de que: ')
-        doc.text(20, 95, '1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou\n')
-        doc.text(20, 100,'extravio, a empresa me fornecerá novo equipamento e cobrará o valor de um equipamento da mesma\n')
-        doc.text(20, 105,'marca ou equivalente ao da praça;')
-        doc.text(20, 115, '2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor\n')
-        doc.text(20, 120, 'competente;')
-        doc.text(20, 130, '3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento\n')
-        doc.text(20, 135, 'completo e em perfeito estado de conservação, considerando-se o tempo do uso dele e devolução imediata\n')
-        doc.text(20, 140, 'ao setor competente;')
-        doc.text(20, 150, '4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.\n')
-        doc.text(20, 155, 'Descrição do(s) material(is):')
-       
 
-        doc.setFontSize(11)
-        doc.setFont('Arial Narrow', 'bold');
-        doc.text(center, 165, 'AQUISIÇÃO');
-
-        doc.setFontSize(11)
-        doc.setFont('Arial Narrow', 'normal');
-        doc.text(center, 166, "")
-
-        let textItems = "";
-        console.log(items)
-        items.forEach((item, idx) => {    
-            textItems += item  + "\n"
-        })
-  
-
-        doc.text(35, 175,textItems).setFontSize(11).setFont('Arial Narrow', 'normal');        
-        doc.text(20, 200, 'Atestamos que o bem foi entregue em ' + Form.getDate() + ', \nnas seguintes condições:');
-        doc.text(20, 215, '(  ) Em perfeito estado\n');
-        doc.text(20, 220, '(  ) Apresentado marcas de uso\n');
-        doc.text(20, 225, '(  ) Apresentando defeito\n');
-        doc.text(20, 230, '(  ) Faltando peças ou acessórios\n');
-
-        doc.text('__________________________________', center,245, { align: 'center' }).setFontSize(11).setFont('Arial Narrow', '');
+      
         
-        doc.text(20,235,"").setFontSize(14).setFont('Calibri (Corpo)', 'bold');
-        doc.text('NOME RESPONSÁVEL', center, 255, { align: 'center' })
-        doc.save('PDF_NAME')
-        */
     },
 
     submit() {
