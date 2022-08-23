@@ -160,6 +160,7 @@ const DOCUMENT_CONFIG = {
     align_center: 'center',
     align_left: 'left',
     align_rigth: 'rigth',
+    assing_align: 80,
 
 }
 
@@ -360,27 +361,186 @@ const Form = {
      },
 
 
-    makeDocument(contractType, requerimentType, collaborator, address, itemsArray, pdfName, documentTitle) {
-        
+    makeAquisitionDocument(collaborator, address, itemsArray, ENUM_PDF_NAME,DOCUMENT_TOP_DESCRIPTION) {
         var doc = new jsPDF()
         var width = doc.internal.pageSize.getWidth();
         const center  = (width / 2);
 
+        console.log(ENUM_PDF_NAME)
         doc.setFontSize(FONT_SIZE.SIZE_14);
         doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD)
+        doc.text(DOCUMENT_TOP_DESCRIPTION, center,20, {align: DOCUMENT_CONFIG.align_center}); 
+
+
+        doc.setFontSize(FONT_SIZE.SIZE_11);
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.NORMAL)
+        doc.text(ACQUISITION_TERM.LINE_1, 35,45, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_2, 20,50, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_3, 20,55, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_4, 20,60, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_5, 20,65, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_6, 20,70, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_7, 20,80, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_8, 20,85, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_9, 20,90, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_10, 20,100, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_11, 20,105, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_12, 20,115, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_13, 20,120, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_14, 20,125, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_15, 20,135, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_16, 20,140, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD)
+        doc.text(ACQUISITION_TERM.LINE_17, center,155, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.NORMAL)
+        let nextLine = 165;
+        itemsArray.forEach(item => {
+            doc.text(item, 20,nextLine, {align: DOCUMENT_CONFIG.align_left});
+            nextLine += 5;
+        })
         
-        doc.text(documentTitle, center,30); 
+        const assign = (nextLine + 20);
+        const responseName = (assign + 10);
+
+        doc.setFontSize(FONT_SIZE.SIZE_11)
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD)
+        doc.text('__________________________________', DOCUMENT_CONFIG.assing_align,assign, { align: DOCUMENT_CONFIG.align_left});
+        
+
+        doc.setFontSize(14)
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD);
+        doc.text(DOCUMENT_BASEBOARD.LINE_6, (DOCUMENT_CONFIG.assing_align + 5), responseName, {align: DOCUMENT_CONFIG.align_left})
+
+        doc.save(ENUM_PDF_NAME);
     },
 
-    
+    makeChangeDocument(collaborator, address, itemsArray, ENUM_PDF_NAME,DOCUMENT_TOP_DESCRIPTION) {
+        console.log(itemsArray)
+        var doc = new jsPDF()
+        var width = doc.internal.pageSize.getWidth();
+        const center  = (width / 2);
+
+        console.log(ENUM_PDF_NAME)
+        doc.setFontSize(FONT_SIZE.SIZE_14);
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD)
+        doc.text(DOCUMENT_TOP_DESCRIPTION, 60,10, {align: DOCUMENT_CONFIG.align_left}); 
+
+
+        doc.setFontSize(FONT_SIZE.SIZE_11);
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.NORMAL)
+        doc.text(ACQUISITION_TERM.LINE_1, 35,45, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_2, 20,50, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_3, 20,55, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_4, 20,60, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_5, 20,65, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_6, 20,70, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_7, 20,90, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_8, 20,95, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_9, 20,100, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_10, 20,110, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_11, 20,115, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_12, 20,135, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_13, 20,140, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_14, 20,145, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_15, 20,165, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_16, 20,170, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_17, 20,190, {align: DOCUMENT_CONFIG.align_left});
+
+        let nextLine = 205;
+        itemsArray.forEach(item => {
+            doc.text(item, 20,nextLine, {align: DOCUMENT_CONFIG.align_left});
+            nextLine += 5;
+        })
+        
+        const assign = (nextLine + 20);
+        const responseName = (assign + 10);
+
+        doc.setFontSize(FONT_SIZE.SIZE_11)
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, '');
+        doc.text('__________________________________', DOCUMENT_CONFIG.assing_align,assign, { align: DOCUMENT_CONFIG.align_left});
+        
+
+        doc.setFontSize(14)
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD);
+        doc.text(DOCUMENT_BASEBOARD.LINE_6, DOCUMENT_CONFIG.assing_align, responseName, {align: DOCUMENT_CONFIG.align_left})
+
+        doc.save(ENUM_PDF_NAME);
+    },
+
+    makeDevolutionDocument(collaborator, address, itemsArray, ENUM_PDF_NAME,DOCUMENT_TOP_DESCRIPTION) {
+        var doc = new jsPDF()
+        var width = doc.internal.pageSize.getWidth();
+        const center  = (width / 2);
+
+        console.log(ENUM_PDF_NAME)
+        doc.setFontSize(FONT_SIZE.SIZE_14);
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD)
+        doc.text(DOCUMENT_TOP_DESCRIPTION, 60,10, {align: DOCUMENT_CONFIG.align_left}); 
+
+
+        doc.setFontSize(FONT_SIZE.SIZE_11);
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.NORMAL)
+        doc.text(ACQUISITION_TERM.LINE_1, 35,45, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_2, 20,50, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_3, 20,55, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_4, 20,60, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_5, 20,65, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_6, 20,70, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_7, 20,90, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_8, 20,95, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_9, 20,100, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_10, 20,110, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_11, 20,115, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_12, 20,135, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_13, 20,140, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_14, 20,145, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_15, 20,165, {align: DOCUMENT_CONFIG.align_left});
+        doc.text(ACQUISITION_TERM.LINE_16, 20,170, {align: DOCUMENT_CONFIG.align_left});
+
+        doc.text(ACQUISITION_TERM.LINE_17, 20,190, {align: DOCUMENT_CONFIG.align_left});
+
+        let nextLine = 205;
+        itemsArray.forEach(item => {
+            doc.text(item, 20,nextLine, {align: DOCUMENT_CONFIG.align_left});
+            nextLine += 5;
+        })
+        
+        const assign = (nextLine + 20);
+        const responseName = (assign + 10);
+
+        doc.setFontSize(FONT_SIZE.SIZE_11)
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, '');
+        doc.text('__________________________________', DOCUMENT_CONFIG.assing_align,assign, { align: DOCUMENT_CONFIG.align_left});
+        
+
+        doc.setFontSize(14)
+        doc.setFont(FONT_FAMILY.TIMES_ROMAN, FONT_STYLE.BOLD);
+        doc.text(DOCUMENT_BASEBOARD.LINE_6, DOCUMENT_CONFIG.assing_align, responseName, {align: DOCUMENT_CONFIG.align_left})
+
+        doc.save(ENUM_PDF_NAME);
+    },
+
     generateDocument(contractType, requerimentType, collaborator, address, itemsArray) {
-      
+        console.log(itemsArray)
         if(contractType == ENUM_CONTRACT_TYPE.CLT) {
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeAquisitionDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -390,9 +550,7 @@ const Form = {
             }
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.CHG) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeChangeDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -402,9 +560,7 @@ const Form = {
             }
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.DEV) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeDevolutionDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -418,9 +574,7 @@ const Form = {
         if(contractType == ENUM_CONTRACT_TYPE.PJ) {
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeAquisitionDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -430,9 +584,7 @@ const Form = {
             }
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.CHG) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeChangeDocumentDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -442,9 +594,7 @@ const Form = {
             }
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.DEV) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeDevolutionDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -458,9 +608,7 @@ const Form = {
         if(contractType == ENUM_CONTRACT_TYPE.ESTAG) {
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeAquisitionDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -470,9 +618,7 @@ const Form = {
             }
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.CHG) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeChangeDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -482,9 +628,7 @@ const Form = {
             }
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.DEV) {
-                Form.makeDocument(
-                    contractType, 
-                    requerimentType, 
+                Form.makeDevolutionDocument(
                     collaborator, 
                     address, 
                     itemsArray, 
@@ -493,10 +637,7 @@ const Form = {
                 );
             }
 
-        }
-
-      
-        
+        } 
     },
 
     submit() {
@@ -546,13 +687,13 @@ const Form = {
                 validateEmpty(element.value, element.placeholder)
                 itemsArray.push(element.value)
             });
-
-            const contractType = document.getElementById(SELECTORS.CONTRACT_TYPE).value
-            const requerimentType = document.getElementById(SELECTORS.REQUERIMENT_TYPE).value
+         
+            let contractType = document.getElementById(SELECTORS.CONTRACT_TYPE).value
+            let requerimentType = document.getElementById(SELECTORS.REQUERIMENT_TYPE).value
 
             validateEmpty(contractType, DESCRIPTIONS.CONTRACT_TYPE);
             validateEmpty(requerimentType, DESCRIPTIONS.REQUERIMENT_TYPE);
-         
+          
             Form.generateDocument(contractType, requerimentType, collaborator, address, itemsArray)
           
        
