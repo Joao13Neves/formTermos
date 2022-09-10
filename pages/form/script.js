@@ -8,7 +8,7 @@ const ENUM_PDF_NAME = {
     CHG_CLT: 'Troca Clt.pdf',
     CHG_PJ:  'Troca Pessoa Jurídica.pdf',
     CHG_ESTAG: 'Troca Estagio.pdf',
-} ;
+} 
 
 const ENUM_REQUERIMENT_TYPE = {
     AQ: 'Aquisição',
@@ -48,6 +48,7 @@ const SELECTORS = {
     FORM_DOCUMENT_INPUT: '#form-document input',
     FORM_ADDRESS_INPUT: '#form-address input',
     FORM_ITEMS_INPUT: '#form-items input',
+    CONTRACT_TYPE_ID: '.contract-type',
     CONTRACT_TYPE_CLT: '.contract-type-clt',
     CONTRACT_TYPE_PJ: '.contract-type-pj',
     CONTRACT_TYPE_ESTAG: '.contract-type-estag',
@@ -55,16 +56,22 @@ const SELECTORS = {
     HANDLE_NEW_INPUT: '#new-div-', 
 
     REQUERIMENT_TYPE: 'tipo-requerimento',
-    CONTRACT_TYPE: 'tipo-contrato',
     
-    //document
+    ID_REQUERIMENTO_TYPE_AQUISICAO: '#tipo-requerimento-aquisicao',
+    ID_REQUERIMENTO_TYPE_DEVOLUCAO: '#tipo-requerimento-troca',
+    ID_REQUERIMENTO_TYPE_TROCA: '#tipo-requerimento-devolucao',
+    
+    ID_CONTRACT_TYPE_CLT: '#tipo-contrato-clt',
+    ID_CONTRACT_TYPE_PJ: '#tipo-contrato-pj',
+    ID_CONTRACT_TYPE_ESTAG: '#tipo-contrato-estag',
+
+    
     NAME: 'name', 
     OCUPATION: 'ocupacao', 
     CPF: 'cpf', 
     CNPJ: 'cnpj', 
     NATIONALITY: 'nacionalidade', 
 
-    //address
     ZIPCODE: 'cep',
     STREET: 'rua', 
     NUMBER: 'numero', 
@@ -133,8 +140,6 @@ const DESCRIPTIONS = {
     UF: 'Uf'
 }
 
-
-/// PDF CONFIG
 const FONT_FAMILY = {
     COURIER: 'Courier',
     COURIER_BOLD:'Courier-Bold',
@@ -169,7 +174,6 @@ const FONT_STYLE = {
    NORMAL: 'normal'
 }
 
-
 const DOCUMENT_TOP_DESCRIPTION = {
     LINE_AQUISITION_EQUIPAMENT: `TERMO DE AQUISIÇÃO DE EQUIPAMENTOS`, 
     LINE_CHANGE_EQUIPAMENTE: `TERMO DE TROCA DE EQUIPAMENTOS`, 
@@ -182,7 +186,7 @@ const DOCUMENT_BASEBOARD = {
     LINE_3:'(  ) Apresentado marcas de uso',
     LINE_4:'(  ) Apresentando defeito',
     LINE_5:'(  ) Faltando peças ou acessórios',
-    LINE_6:'NOME RESPONSÁVEL'
+    LINE_6:'NOME INFORMAR'
 }
 
 const ACQUISITION_TERM = {
@@ -211,13 +215,37 @@ const ACQUISITION_TERM = {
 }
 
 const CHANGE_TERM = {
-
+    LINE_1: `Eu, INFORMAR, residente no endereço INFORMAR, no bairro INFORMAR, localizado na cidade de`,
+    LINE_2: `INFORMAR, no CEP INFORMAR, de nacionalidade INFORMAR, exercendo a função de INFORMAR,`,
+    LINE_3: `inscrito no CPF sob o n° INFORMAR declaro e confirmo a troca dos materiais de trabalho cedido pela`,
+    LINE_4: `Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o n° 67.201.640.0001/30.`,
+    LINE_5: `   A título de empréstimo, para meu uso exclusivo, conforme determinado na lei, os equipamentos`,
+    LINE_6: `especificados neste termo de responsabilidade, comprometendo-me a mantê-los em perfeito estado de conservação,`,
+    LINE_7: `ficando ciente de que:`,
+    LINE_8: `1- Se o equipamento for danificado ou inutilizado por emprego inadequado, mau uso, negligência ou extravio, a empresa me`,
+    LINE_9: `fornecerá novo equipamento e cobrará o valor de um equipamento da mesma marca ou equivalente ao da praça;`, 
+    LINE_10: `2- Em caso de dano, inutilização ou extravio do equipamento deverei comunicar imediatamente ao setor competente;`,
+    LINE_11: `3- Terminando os serviços ou no caso de rescisão do contrato de trabalho, devolverei o equipamento completo e em perfeito estado`,
+    LINE_12: `de conservação, considerando-se o tempo do uso dele e devolução imediata ao setor competente;`,
+    LINE_13: `4- Estando os equipamentos em minha posse, estarei sujeito a inspeções sem prévio aviso.`,
+    LINE_14: `Descrição do(s) material(is):`,
+    LINE_15: `AQUISIÇÃO`,
+    LINE_16: `DEVOLUÇÃO`,
+    LINE_17: 'Atestamos que o bem foi entregue em INFORMAR, nas seguintes condições:',
+    LINE_18: '',
+    LINE_19: '',
+    LINE_20: '',
 }
 
 const DEVOLUTION_TERM = {
-    
+    LINE_1: `Eu, INFORMAR, residente no endereço INFORMAR, no bairro INFORMAR, localizado na cidade de`,
+    LINE_2: `INFORMAR, no CEP INFORMAR, de nacionalidade INFORMAR, exercendo a função de INFORMAR,`,
+    LINE_3: `inscrito no CPF sob o n° INFORMAR e proprietário do CNPJ inscrito sob n° INFORMAR, declaro e confirmo`,
+    LINE_4: `a devolução do material de trabalho cedido pela Modal Gestão e Resultados Ltda, inscrita no CNPJ sob o`,
+    LINE_5: `n° 67.201.640.0001/30.`,
+    LINE_6: `Descrição do(s) material(is):`,
+    LINE_7: `DEVOLUÇÃO`,
 }
-
 
 
 function changeTitleContractDefault() {    
@@ -225,12 +253,14 @@ function changeTitleContractDefault() {
     document.querySelector(SELECTORS.CONTRACT_TYPE_ESTAG).textContent = DESCRIPTIONS.ESTAG
     document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.NOME    
     document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.DISPLAY_NONE;
+
 }
 
 function changeTitleContractBusiness() {        
     document.querySelector(SELECTORS.CONTRACT_TYPE_PJ).textContent = DESCRIPTIONS.PJ
     document.querySelector(SELECTORS.CONTRACT_NAME).textContent = DESCRIPTIONS.COMPANY_NAME
     document.querySelector(SELECTORS.IS_CNPJ).style.display = ENUM_STYLES.DISPLAY_BLOCK;
+
 }
 
 function capitalizeFirstLetter(string) {
@@ -238,7 +268,6 @@ function capitalizeFirstLetter(string) {
 }
 
 function validateEmpty(value, name) {
-
 
     if(!value || !value.trim()) {
         throw new Error(DESCRIPTIONS.FIELD + name + DESCRIPTIONS.NOT_NULL);
@@ -253,13 +282,39 @@ function removeInput(event) {
 
      let element = document.getElementById(removeInput);
      element.remove();
- }
+}
 
 function showCnpjField() {
     document.querySelector(SELECTORS.IS_CNPJ)
     .style.display = ENUM_STYLES.DISPLAY_NONE;
 }
+
 showCnpjField(); 
+
+function getContractType() {
+    if (document.querySelector(SELECTORS.ID_CONTRACT_TYPE_CLT).checked) {
+        return ENUM_CONTRACT_TYPE.CLT;
+    } else if (document.querySelector(SELECTORS.ID_CONTRACT_TYPE_PJ).checked) {
+        return ENUM_CONTRACT_TYPE.PJ;
+    } else if (document.querySelector(SELECTORS.ID_CONTRACT_TYPE_ESTAG).checked) {
+        return ENUM_CONTRACT_TYPE.ESTAG;
+    } else {
+        return null
+    }
+}
+
+function getRequerimentType() {
+    if (document.querySelector(SELECTORS.ID_REQUERIMENTO_TYPE_AQUISICAO).checked) {
+        return ENUM_REQUERIMENT_TYPE.AQ;
+    } else if (document.querySelector(SELECTORS.ID_REQUERIMENTO_TYPE_TROCA).checked) {
+        return ENUM_REQUERIMENT_TYPE.CHG;
+    } else if (document.querySelector(SELECTORS.ID_REQUERIMENTO_TYPE_DEVOLUCAO).checked) {
+        return ENUM_REQUERIMENT_TYPE.DEV;
+    } else {
+        return null
+    }
+}
+
 
 const CreateField = {
     newField: 0,
@@ -316,9 +371,9 @@ const Form = {
             document.getElementById(SELECTORS.DISTRICT).value=("");
             document.getElementById(SELECTORS.CITY).value=("");
             document.getElementById(SELECTORS.UF).value=("");
-     },
+    },
 
-     callback(value) {
+    callback(value) {
         if (!("erro" in value)) {
             document.getElementById(SELECTORS.STREET).value=(value.logradouro);
             document.getElementById(SELECTORS.DISTRICT).value=(value.bairro);
@@ -329,9 +384,9 @@ const Form = {
             Form.clearForm();
             alert(DESCRIPTIONS.CEP_NOT_FOUND);
         }
-     },
+    },
 
-     getAddress(valor) {
+    getAddress(valor) {
        
         let cep = valor.replace(/\D/g, '');
         if (cep != "") {
@@ -358,8 +413,7 @@ const Form = {
         else {
             Form.clearForm();
         }
-     },
-
+    },
 
     makeAquisitionDocument(collaborator, address, itemsArray, ENUM_PDF_NAME,DOCUMENT_TOP_DESCRIPTION) {
         var doc = new jsPDF()
@@ -536,7 +590,7 @@ const Form = {
     },
 
     generateDocument(contractType, requerimentType, collaborator, address, itemsArray) {
-        console.log(itemsArray)
+     
         if(contractType == ENUM_CONTRACT_TYPE.CLT) {
 
             if(requerimentType === ENUM_REQUERIMENT_TYPE.AQ) {
@@ -643,6 +697,7 @@ const Form = {
     submit() {
 
         try {
+
             const  collaborator = {
                 name: document.getElementById(SELECTORS.NAME).value,
                 cpf: document.getElementById(SELECTORS.CPF).value,
@@ -660,9 +715,6 @@ const Form = {
                 uf: document.getElementById(SELECTORS.UF).value,
             }
 
-            console.log(collaborator)
-            console.log(address)
-            
             validateEmpty(collaborator.name, DESCRIPTIONS.NAME);
             validateEmpty(collaborator.cpf, DESCRIPTIONS.CPF);
             
@@ -687,13 +739,17 @@ const Form = {
                 validateEmpty(element.value, element.placeholder)
                 itemsArray.push(element.value)
             });
-         
-            let contractType = document.getElementById(SELECTORS.CONTRACT_TYPE).value
-            let requerimentType = document.getElementById(SELECTORS.REQUERIMENT_TYPE).value
 
+            let contractType = getContractType()
+            let requerimentType = getRequerimentType()
+
+            console.log(contractType)
+            console.log(requerimentType)
+            
             validateEmpty(contractType, DESCRIPTIONS.CONTRACT_TYPE);
             validateEmpty(requerimentType, DESCRIPTIONS.REQUERIMENT_TYPE);
-          
+        
+
             Form.generateDocument(contractType, requerimentType, collaborator, address, itemsArray)
           
        
